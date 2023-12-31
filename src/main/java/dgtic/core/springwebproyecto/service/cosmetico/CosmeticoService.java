@@ -2,7 +2,7 @@ package dgtic.core.springwebproyecto.service.cosmetico;
 
 import dgtic.core.springwebproyecto.model.Cosmetico;
 import dgtic.core.springwebproyecto.model.Medicamento;
-import dgtic.core.springwebproyecto.model.Producto;
+import dgtic.core.springwebproyecto.model.Articulo;
 
 import java.util.List;
 

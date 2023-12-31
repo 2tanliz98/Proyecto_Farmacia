@@ -4,7 +4,7 @@
 <head th:replace="plantillas/plantilla :: head"></head>
 
 <body>
-<header th:replace="plantillas/plantilla :: header"></header>
+
 <main class="container text-center">
     <!-- Blog Post -->
     <div class="card mb-4">
@@ -23,11 +23,11 @@
                         </thead>
                         <tbody>
                         <tr th:each="dorden:${carrito}">
-                            <td th:text="${dorden.nombre}"></td>
-                            <td th:text="${dorden.precio}"></td>
+                            <td th:text="${dorden.detalleCompraId.articulo.nombre}"></td>
+                            <td th:text="${dorden.detalleCompraId.articulo.precio}"></td>
                             <td th:text="${dorden.cantidad}"></td>
-                            <td th:text="${dorden.total}"></td>
-                            <td><a th:href="@{/delete-carrito/{id}   (id=${dorden.producto.id}) }"
+                            <td th:text="${dorden.precioTotal}"></td>
+                            <td><a th:href="@{/delete-carrito/{id}   (id=${dorden.detalleCompraId.articulo.articuloId}) }"
                                    class="btn btn-danger">Quitar</a></td>
                         </tr>
                         </tbody>

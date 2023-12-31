@@ -1,7 +1,7 @@
 package dgtic.core.springwebproyecto.service.medicamento;
 
 import dgtic.core.springwebproyecto.model.Medicamento;
-import dgtic.core.springwebproyecto.model.Producto;
+import dgtic.core.springwebproyecto.model.Articulo;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,12 @@
 package dgtic.core.springwebproyecto.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,10 +14,13 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "carrito_compra")
-public class CarritoCompra {
+@Table(name = "detalle_compra")
+public class DetalleCompra {
     @EmbeddedId
-    private CarritoCompraId carritoCompraId;
+    private DetalleCompraId detalleCompraId;
 
     private Integer cantidad;
+
+    @Column(precision = 8, scale = 2)
+    private BigDecimal precioTotal;
 }

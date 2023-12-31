@@ -25,12 +25,15 @@ public class Tarjeta {
     @ManyToOne
     @JoinColumn(name="usuario")
     private Usuario usuario;
+
     @Column(name="numero_tarjeta")
     @NotBlank(message = "El número de tarjeta no debe estar vacío")
     @Pattern(regexp = "[0-9]{10}",message = "Tarjeta no valida")
     private String numeroTarjeta;
+
     @Column(name="tipo_tarjeta")
     private String tipoTarjeta;
+
     @Column(name="fecha_expiracion")
     @DateTimeFormat(pattern = "yyyy-MM-dd", fallbackPatterns = "yyyy-MM-dd")
     private Date date;

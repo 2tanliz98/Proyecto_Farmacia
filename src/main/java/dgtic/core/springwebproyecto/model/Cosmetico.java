@@ -15,7 +15,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "cat_cosmeticos")
 @DiscriminatorValue("2")
-public class Cosmetico extends Producto{
+public class Cosmetico extends Articulo{
     @Column(name = "tono_color")
     private String tonoColor;
 

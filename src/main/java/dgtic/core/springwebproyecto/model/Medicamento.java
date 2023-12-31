@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "cat_farmacos")
 @DiscriminatorValue("1")
-public class Medicamento extends Producto{
+public class Medicamento extends Articulo{
     @Column(name = "ingrediente_activo")
     private String ingredienteActivo;
 

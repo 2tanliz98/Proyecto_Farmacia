@@ -1,10 +1,8 @@
 package dgtic.core.springwebproyecto.service.cosmetico;
 
 import dgtic.core.springwebproyecto.model.Cosmetico;
-import dgtic.core.springwebproyecto.model.Medicamento;
-import dgtic.core.springwebproyecto.model.Producto;
+import dgtic.core.springwebproyecto.model.Articulo;
 import dgtic.core.springwebproyecto.repositories.CosmeticoRepository;
-import dgtic.core.springwebproyecto.repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

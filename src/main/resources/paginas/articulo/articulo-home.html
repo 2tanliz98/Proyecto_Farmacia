@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <!-- Page Content -->
+    <main class="container">
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+            <li class="breadcrumb-item active">Articulo</li>
+        </ol>
+
+        <!-- Post articulo -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a href="#"> <img class="img-fluid rounded"
+                                          th:src="@{'/imagenes/'+${articulo.imagen}}" width="100%" height="100%" alt="">
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <form th:action="@{/articulo/add-carrito}" th:object="${articulo}"
+                              method="post">
+
+                            <input type="hidden" name="articuloId" th:value="${articulo.articuloId}"/>
+
+                            <h2 class="card-title" th:text="${articulo.nombre}"></h2>
+
+                            <ul class="list-group">
+                                <li class="list-group-item"><h5 th:text=" 'Precio: '+ ${articulo.precio} "></h5></li>
+                                <li class="list-group-item">
+                                    <p th:text=" 'Descripción: '+ ${articulo.descripcion} "></p>
+                                </li>
+                                <li class="list-group-item">
+                                    <h6>
+                                    Cantidad: <input type="number" id="cantidad" name="cantidad"
+                                                     autocomplete="off" min="1" max="5" value="1">
+                                    </h6>
+                                </li>
+                            </ul>
+
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">Añadir al carrito</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>
