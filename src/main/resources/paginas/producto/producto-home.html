@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+<body>
+<header th:replace="plantillas/plantilla :: header"></header>
+<!-- Page Content -->
+<main class="container">
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+        <li class="breadcrumb-item active">Producto</li>
+    </ol>
+
+    <!-- Post producto -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <a href="#"> <img class="img-fluid rounded"
+                                      th:src="@{'/imagenes/'+${producto.imagen}}" width="100%" height="100%" alt="">
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <form th:action="@{/add-carrito}" method="POST">
+                        <input type="hidden" th:value="${producto.productoId}" name="id">
+                        <h2 class="card-title" th:text="${producto.nombre}"></h2>
+
+                        <ul class="list-group">
+                            <li class="list-group-item"><h5 th:text=" 'Precio: '+ ${empresaProducto.precio} "></h5></li>
+<!--                            <li class="list-group-item">-->
+<!--                                <p th:text=" 'Descripción: '+ ${producto.descripcion} "></p>-->
+<!--                            </li>-->
+                            <li class="list-group-item"><h6>
+                                Cantidad: <input type="number" id="cantidad" name="cantidad"
+                                                 autocomplete="off" min="1" max="5" value="1">
+                            </h6></li>
+                        </ul>
+
+                        <button type="submit" class="btn btn-dark">Añadir al carrito</button>
+
+<!--                        <input type="hidden" name="producto_tipo" th:value="${producto.producto_tipo}"/>-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

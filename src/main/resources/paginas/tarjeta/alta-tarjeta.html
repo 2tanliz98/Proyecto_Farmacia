@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+<body>
+<header th:replace="plantillas/plantilla :: header"></header>
+<main class="container text-center">
+    <div class="card">
+        <h4 class="card-header"><strong>Registro</strong></h4>
+        <div class="card-body">
+            <form th:action="@{/tarjeta/registro-tarjeta}" th:object="${tarjetaEntity}"
+                  method="post">
+                <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role="alert">
+                    Verifique los siguientes errores
+                    <ul>
+                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <input id="numeroTarjeta" name="numeroTarjeta" type="text" class="form-control"
+                           placeholder="Número de tarjeta" required="required" th:field="*{numeroTarjeta}">
+                </div>
+                <div>
+                    <label for="tiposTarjeta">Tipo de Tarjeta:</label>
+                    <select id="tiposTarjeta" name="tipoTarjeta">
+                        <option th:each="tipo : ${tiposTarjeta}" th:value="${#strings.capitalize(tipo.toString())}"
+                                th:text="${#strings.capitalize(tipo.toString())}"></option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="date">Fecha de expiración</label>
+                            <input type="date" class="form-control" id="date" name="date"
+                                   placeholder="dd/MM/yyyy" required="required" th:field="*{date}" >
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-block btn-lg" value="Guardar">
+<!--                    <a th:href="@{/usuario/menu-usuario"  role="button"-->
+<!--                       class="btn btn-secondary btn-block btn-lg">Cancelar</a>-->
+
+                    <input type="hidden" name="id" th:field="*{id}"/>
+                    <input type="hidden" name="usuario" th:field="*{usuario}" value="${usuarioId}"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>
