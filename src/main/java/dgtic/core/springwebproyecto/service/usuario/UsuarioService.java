@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface UsuarioService {
     Page<Usuario> findAll(Pageable pageable);
-    void guardar(Usuario usuario);
     void borrar(Integer id);
     Usuario buscarUsuarioId(Integer id);
     List<Usuario> buscarUsuarios();
+    Usuario registrarUsuario(Usuario usuario);
+    Usuario altaUsuario(Usuario usuario);
 }

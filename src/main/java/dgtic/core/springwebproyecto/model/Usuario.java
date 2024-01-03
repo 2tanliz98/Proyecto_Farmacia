@@ -3,6 +3,11 @@ package dgtic.core.springwebproyecto.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,23 +19,30 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @Column(name = "id_usuario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(length = 50)
+
+
     private String nombre;
-    @Column(name = "ap_pat", length = 50)
+
+    @Column(name = "ap_pat")
     private String apPaterno;
-    @Column(name = "ap_mat", length = 50)
+
+    @Column(name = "ap_mat")
     private String apMaterno;
+
     @Column(length = 50)
     @Email
     private String email;
-    @Column(name = "contrasenia", length = 15)
+
+    @Column(name = "contrasenia")
     private String password;
+
     private Integer rol = 1;
+
 //    @OneToOne
 //    @JoinColumn(name = "direccion")
 //    private Direccion direccion;
@@ -59,4 +71,41 @@ public class Usuario {
                 ", telefono='" + telefono + '\'' +
                 '}';
     }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.email.contains("@gmail.com")) {
+            return Arrays.asList(
+                    new SimpleGrantedAuthority("ROLE_CLIENTE")
+            );
+        }
+        return Arrays.asList(new SimpleGrantedAuthority("ROLE_CLIENTE"));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }

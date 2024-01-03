@@ -57,7 +57,7 @@ CREATE TABLE usuario(
 	email VARCHAR(50) NOT NULL,
 	telefono VARCHAR(10) NOT NULL,
 	-- direccion INT  NOT NULL,
-	contrasenia VARCHAR(15) NOT NULL,
+	contrasenia VARCHAR(150) NOT NULL,
    rol INT  NOT NULL,
 	CONSTRAINT email_uq UNIQUE (email)
 	-- CONSTRAINT usuario_direccion_fk FOREIGN KEY (direccion) REFERENCES farmacia.direccion(gen_val)

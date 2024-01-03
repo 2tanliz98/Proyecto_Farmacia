@@ -52,7 +52,7 @@ public class UsuarioController {
             return "usuario/alta-usuario";
         }
         try {
-            usuarioService.guardar(usuarioEntity);
+            usuarioService.altaUsuario(usuarioEntity);
             Integer usuarioId = usuarioEntity.getId();
             flash.addFlashAttribute("success", "Se almaceno con éxito");
             flash.addFlashAttribute("usuarioId", usuarioId);
@@ -120,10 +120,9 @@ public class UsuarioController {
         return "usuario/alta-usuario";
     }
 
-    @GetMapping("login-usuario")
+    @GetMapping("/login")
     public String loginUsuario(Model model){
         Usuario usuarioEntity = new Usuario();
-        model.addAttribute("operacion", "Registro Usuario");
         model.addAttribute("usuarioEntity", usuarioEntity);
         return "usuario/login";
     }
