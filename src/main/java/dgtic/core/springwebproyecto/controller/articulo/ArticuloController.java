@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "articulo")
@@ -50,26 +51,37 @@ public class ArticuloController {
     @PostMapping("/add-carrito")
     public String addArticulo(@RequestParam Integer articuloId, @RequestParam Integer cantidad,
                                Model model) {
-
+        // verificación de existencia del artículo
         Articulo articulo = articuloService.findbyId(articuloId).get();
-        DetalleCompra orden = new DetalleCompra();
+
+        // creación de un nuevo id de detalle de orden
         DetalleCompraId ordenId = new DetalleCompraId();
         ordenId.setPedido(pedido);
-
-        BigDecimal suma = new BigDecimal(0);
-
         ordenId.setArticulo(articulo);
 
-        orden.setCantidad(cantidad);
+        //cración de nuevo detalle de orden
+        DetalleCompra orden = new DetalleCompra();
         orden.setDetalleCompraId(ordenId);
-        orden.setPrecioTotal(articulo.getPrecio());
+        orden.setCantidad(cantidad);
+        BigDecimal subTotal = new BigDecimal(cantidad);
+        subTotal = subTotal.multiply(articulo.getPrecio());
+        orden.setPrecioTotal(subTotal);
 
         //validar que le producto no se añada 2 veces
         Integer idArt = articulo.getArticuloId();
         boolean ingresado = detalleSesion.stream().
                 anyMatch(p -> p.getDetalleCompraId().getArticulo().getArticuloId()==idArt);
 
+        List<DetalleCompra> ordenUpdate = new ArrayList<DetalleCompra>();
         if (!ingresado) {
+            detalleSesion.add(orden);
+        }else{
+            for (DetalleCompra detalleOrden : detalleSesion) {
+                if (!Objects.equals(detalleOrden.getDetalleCompraId().getArticulo().getArticuloId(), idArt)) {
+                    ordenUpdate.add(detalleOrden);
+                }
+            }
+            detalleSesion = ordenUpdate;
             detalleSesion.add(orden);
         }
 
@@ -86,6 +98,14 @@ public class ArticuloController {
         return "articulo/carrito";
     }
 
+    // inicio sesion
+    @GetMapping("ver-carrito")
+    public  String verCarrito(Model model){
+        model.addAttribute("carrito", detalleSesion);
+        model.addAttribute("pedido", pedido);
+        return "articulo/carrito";
+    }
+
     // quitar un producto del carrito
     @GetMapping("delete-carrito/{id}")
     public String deleteProductoCart(@PathVariable Integer id, Model model) {
@@ -94,7 +114,7 @@ public class ArticuloController {
         List<DetalleCompra> ordenesNuevo = new ArrayList<DetalleCompra>();
 
         for (DetalleCompra detalleOrden : detalleSesion) {
-            if (detalleOrden.getDetalleCompraId().getPedido().getPedidoId() != id) {
+            if (!Objects.equals(detalleOrden.getDetalleCompraId().getArticulo().getArticuloId(), id)) {
                 ordenesNuevo.add(detalleOrden);
             }
         }
@@ -102,15 +122,23 @@ public class ArticuloController {
         // poner la nueva lista con los productos restantes
         detalleSesion = ordenesNuevo;
 
+        // nueva suma de total
+        pedido.setTotal(new BigDecimal(0));
         BigDecimal sumaTotal = detalleSesion.stream()
                 .map(DetalleCompra::getPrecioTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         pedido.setTotal(sumaTotal);
         model.addAttribute("carrito", detalleSesion);
-        model.addAttribute("orden", pedido);
+        model.addAttribute("pedido", pedido);
 
-        return "articulo/carrito";
+        return "redirect:/articulo/ver-carrito";
+    }
+
+    @GetMapping("modificar-carrito/{id}")
+    public String modificarCarrito(@PathVariable("id") Integer id,Model model){
+
+        return "articulo/articulo-home/"+id;
     }
 
 }

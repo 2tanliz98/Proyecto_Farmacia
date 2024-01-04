@@ -4,14 +4,18 @@
 <head th:replace="plantillas/plantilla :: head"></head>
 
 <body>
-
+<header th:replace="plantillas/plantilla :: header"></header>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+    <li class="breadcrumb-item active">Carrito</li>
+</ol>
 <main class="container text-center">
     <!-- Blog Post -->
     <div class="card mb-4">
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-9">
-                    <table class="table">
+                    <table class="table" >
                         <thead>
                         <tr>
                             <th scope="col">Producto</th>
@@ -22,14 +26,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="dorden:${carrito}">
-                            <td th:text="${dorden.detalleCompraId.articulo.nombre}"></td>
-                            <td th:text="${dorden.detalleCompraId.articulo.precio}"></td>
-                            <td th:text="${dorden.cantidad}"></td>
-                            <td th:text="${dorden.precioTotal}"></td>
-                            <td><a th:href="@{/delete-carrito/{id}   (id=${dorden.detalleCompraId.articulo.articuloId}) }"
-                                   class="btn btn-danger">Quitar</a></td>
-                        </tr>
+                            <tr th:each="dorden:${carrito}">
+                                <td th:text="${dorden.detalleCompraId.articulo.nombre}"></td>
+                                <td th:text="${dorden.detalleCompraId.articulo.precio}"></td>
+                                <td th:text="${dorden.cantidad}"></td>
+                                <td th:text="${dorden.precioTotal}"></td>
+                                <td>
+                                    <a th:href="@{/articulo/articulo-home/{id}
+                                    (id=${dorden.detalleCompraId.articulo.articuloId})}"
+                                       class="btn btn-success"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                    <a th:href="@{/articulo/delete-carrito/{id}
+                                    (id=${dorden.detalleCompraId.articulo.articuloId})}"
+                                       class="btn btn-danger"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -39,7 +49,7 @@
 
                     <ul class="list-group">
                         <li class="list-group-item"><h5 th:text="${pedido.total}"></h5></li>
-                        <a th:href="@{/order}" class="btn btn-dark">Ver Orden</a>
+                        <a th:href="@{/order}" class="btn btn-dark">Realizar compra</a>
                     </ul>
                 </div>
 

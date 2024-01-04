@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @Table(name = "detalle_compra")
 public class DetalleCompra {
     @EmbeddedId
-    private DetalleCompraId detalleCompraId;
+    private DetalleCompraId detalleCompraId; //pedido + articulo
 
     private Integer cantidad;
 

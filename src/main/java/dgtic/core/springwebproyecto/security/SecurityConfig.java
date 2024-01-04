@@ -48,11 +48,11 @@ public class SecurityConfig  {
             .requestMatchers("/usuario/menu-usuario",
                     "/usuario/eliminar-usuario/",
                     "/usuario/modificar-usuario/",
-                    "/articulo/add-carrito",
-                    "/articulo/delete-carrito/*",
                     "/direccion/**",
                     "/tarjeta/**").hasRole("CLIENTE")
             .requestMatchers("/", "/**",
+                    "/articulo/add-carrito",
+                    "/articulo/delete-carrito/**",
                     "/usuario/alta-usuario",
                     "/usuario/registro-usuario",
                     "/resources/**").permitAll().anyRequest().permitAll()
