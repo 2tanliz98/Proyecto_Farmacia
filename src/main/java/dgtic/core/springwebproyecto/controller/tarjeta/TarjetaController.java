@@ -8,6 +8,7 @@ import dgtic.core.springwebproyecto.service.usuario.UsuarioService;
 import dgtic.core.springwebproyecto.validation.TarjetaValidacion;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,12 +29,13 @@ public class TarjetaController {
     @Autowired
     TarjetaValidacion tarjetaValidacion;
 
-    @GetMapping("alta-tarjeta/{usuarioId}")
+    @GetMapping("alta-tarjeta")
     public String paginaRegistro(Model model,
-                                 @PathVariable("usuarioId") Integer usuarioId){
+                                 Authentication authentication) {
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+
         Tarjeta tarjetaEntity=new Tarjeta();
-        Usuario usuarioEntity = usuarioService.buscarUsuarioId(usuarioId);
-        tarjetaEntity.setUsuario(usuarioEntity);
+        tarjetaEntity.setUsuario(usuario);
         model.addAttribute("operacion","Registro Tarjeta");
         model.addAttribute("tarjetaEntity",tarjetaEntity);
         model.addAttribute("tiposTarjeta", TipoTarjeta.values());
@@ -54,9 +56,8 @@ public class TarjetaController {
             flash.addFlashAttribute("success","Se almaceno con éxito");
             Integer usuarioId = tarjetaEntity.getUsuario().getId();
             flash.addFlashAttribute("usuarioId",usuarioId);
-//            model.addAttribute("usuarioId", usuarioId);
             model.addAttribute("tarjetaEntity", tarjetaEntity);
-            return "redirect:/usuario/menu-usuario/"+usuarioId;
+            return "redirect:/usuario/menu-usuario";
         }catch(Exception ex){
             ObjectError er=new ObjectError("Duplicados","Número de tarjeta ya existe");
             model.addAttribute("warning","Número de tarjeta repetido");
@@ -73,7 +74,7 @@ public class TarjetaController {
         flash.addAttribute("usuarioId", usuarioId);
         tarjetaService.borrar(id);
         flash.addFlashAttribute("success","La tarjeta se borro correctamente");
-        return "redirect:/usuario/menu-usuario/"+usuarioId;
+        return "redirect:/usuario/menu-usuario";
     }
 
     @GetMapping("modificar-tarjeta/{id}")

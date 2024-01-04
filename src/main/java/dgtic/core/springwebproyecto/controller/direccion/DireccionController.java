@@ -13,6 +13,8 @@ import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,12 +39,15 @@ public class DireccionController {
     @Autowired
     DireccionValidacion direccionValidacion;
 
-    @GetMapping("alta-direccion/{usuarioId}")
-    public String paginaRegistro(@PathVariable("usuarioId") Integer usuarioId,
-                                 Model model, RedirectAttributes flash){
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("alta-direccion")
+    public String paginaRegistro(Model model,
+                                 Authentication authentication) {
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        Integer usuarioId = usuario.getId();
+
         Direccion direccionEntity=new Direccion();
-        Usuario usuarioEntity = usuarioService.buscarUsuarioId(usuarioId);
-        direccionEntity.setUsuario(usuarioEntity);
+        direccionEntity.setUsuario(usuario);
         model.addAttribute("operacion","Registro Direccion");
         model.addAttribute("direccionEntity",direccionEntity);
         model.addAttribute("usuarioId",usuarioId);
@@ -66,7 +71,7 @@ public class DireccionController {
             flash.addFlashAttribute("success","Se almaceno con éxito ");
             flash.addFlashAttribute("usuarioId",direccionEntity.getUsuario().getId());
             model.addAttribute("usuarioId",direccionEntity.getUsuario().getId());
-            return "redirect:/usuario/menu-usuario/"+direccionEntity.getUsuario().getId();
+            return "redirect:/usuario/menu-usuario";
         }catch (Exception ex){
             ObjectError er = new ObjectError("Error",
                     "Ha ocurrido un error al registrar dirección");
@@ -91,7 +96,7 @@ public class DireccionController {
     }
 
     @GetMapping("modificar-direccion/{id}")
-    public String modificarUsuario(@PathVariable("id") Integer id,Model model){
+    public String modificarDireccion(@PathVariable("id") Integer id,Model model){
         Direccion direccion= direccionService.buscarDireccionId(id);
         model.addAttribute("direccionEntity",direccion);
         return "direccion/alta-direccion";
@@ -105,7 +110,7 @@ public class DireccionController {
         flash.addAttribute("usuarioId", usuarioId);
         direccionService.borrar(id);
         flash.addFlashAttribute("success","La dirección se borró correctamente");
-        return "redirect:/usuario/menu-usuario/"+usuarioId;
+        return "redirect:/usuario/menu-usuario";
     }
 
 

@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html   xmlns:th="http://www.thymeleaf.org"
         lang="es">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Title</title>
-</head>
+<head th:replace="plantillas/plantilla :: head"></head>
 <body>
-<main class="container text-center">
-    <!-- Page Content -->
-    <div class="container">
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="container text-center">
+        <!-- Page Content -->
+        <div class="container">
 
-        <div class="card mb-3">
-            <div class="row no-gutters">
-                <div class="col-md-4">
+            <div class="card mb-12">
+                <div class="card-body">
+                    <h2>Ingresar</h2>
                 </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h2>Ingresar</h2>
 
+                <form th:action="@{/autenticacion}" th:object="${usuarioEntity}"
+                      method="POST">
+                    <div class="form-group">
+                        <div class="d-inline-block">
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="Correo electrónico">
+                        </div>
                     </div>
+
+                    <br>
+                    <div class="form-group">
+                        <div class="d-inline-block">
+                            <input type="password"  class="form-control d-inline-block" id="password"
+                               name="password" placeholder="Contraseña" required>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="form-group">
+                        <div class="d-inline-block ">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-ok"></span> Ingresar</button>
+                        </div>
+                    </div>
+                    <br>
+                </form>
+
+                <br>
+                <div class="card-footer text-muted">
+                    <a th:href="@{/usuario/alta-usuario}" class="card-link">Si aún no tiene cuenta aqui puede registrarse</a>
                 </div>
             </div>
         </div>
-
-
-        <form th:action="@{/autenticacion}" th:object="${usuarioEntity}"
-              method="POST">
-            <div class="form-group">
-                <label for="email"> Email:  </label>
-                <input type="email" class="form-control" id="email" name="email"
-                       placeholder="Ingrese su email" required autocomplete="off">
-            </div>
-
-            <div class="form-group">
-                <label for="password"> Contraseña:</label>
-                <input type="password"  class="form-control" id="password" name="password"
-                       placeholder="Ingrese su contraseña" required>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-2">
-                    <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-ok"></span> Ingresar</button>
-                </div>
-            </div>
-        </form>
-        <a th:href="@{/usuario/alta-usuario}" class="card-link">Si aún no tiene cuenta aqui puede registrarse</a>
-    </div>
-</main>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
 </body>
 </html>

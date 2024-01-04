@@ -3,23 +3,22 @@
         lang="es">
 <head th:replace="plantillas/plantilla :: head"></head>
 <body>
-    <h1 th:text="${operacion}"></h1>
     <main class="container text-center">
         <header th:replace="plantillas/plantilla :: header"></header>
         <div class="col-lg-12 navbar">
-            <a class="btn btn-outline-primary" th:href="@{/usuario/modificar-usuario/{id} (id=${usuarioId}) }">Modificar cuenta</a>
+            <a class="btn btn-outline-primary" th:href="@{/usuario/modificar-usuario}">Modificar cuenta</a>
         </div>
         <div class="col-lg-12 navbar">
-            <a class="btn btn-outline-primary" th:href="@{/usuario/eliminar-usuario/{id} (id=${usuarioId}) }">Eliminar cuenta</a>
+            <a class="btn btn-outline-primary" th:href="@{/usuario/eliminar-usuario}">Eliminar cuenta</a>
         </div>
         <div class="col-lg-12 navbar" th:if="${direccionEntity == null}">
-            <a class="btn btn-outline-primary" th:href="@{/direccion/alta-direccion/{usuario} (usuario=${usuarioId}) }">Registrar domicilio</a>
+            <a class="btn btn-outline-primary" th:href="@{/direccion/alta-direccion}">Registrar domicilio</a>
         </div>
         <div class="col-lg-12 navbar"  th:if="${direccionEntity != null}">
             <a class="btn btn-outline-primary" th:href="@{/direccion/modificar-direccion/{id} (id=${direccionEntity.id}) }">Modificar domicilio</a>
         </div>
         <div class="col-lg-12 navbar">
-            <a class="btn btn-outline-primary" th:href="@{/tarjeta/alta-tarjeta/{usuario} (usuario=${usuarioId}) }">Agregar tarjeta</a>
+            <a class="btn btn-outline-primary" th:href="@{/tarjeta/alta-tarjeta}">Agregar tarjeta</a>
         </div>
         <br>
         <div class="col-lg-12 navbar" >
@@ -47,7 +46,7 @@
                 </tbody>
             </table>
         </div>
-        <input type="hidden" name="usuarioId" th:field="*{usuarioId}"/>
+<!--        <input type="hidden" name="usuarioId" th:field="${usuarioId}"/>-->
     </main>
     <footer th:replace="plantillas/plantilla :: footer"></footer>
 </body>

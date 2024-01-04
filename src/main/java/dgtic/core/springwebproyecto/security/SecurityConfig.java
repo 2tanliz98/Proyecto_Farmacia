@@ -45,11 +45,13 @@ public class SecurityConfig  {
         http
             .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
             .authorizeRequests()
-            .requestMatchers("/usuario/menu-usuario/*",
-                    "/usuario/eliminar-usuario/*",
-                    "/usuario/modificar-usuario/*",
+            .requestMatchers("/usuario/menu-usuario",
+                    "/usuario/eliminar-usuario/",
+                    "/usuario/modificar-usuario/",
                     "/articulo/add-carrito",
-                    "/articulo/delete-carrito/*").hasRole("CLIENTE")
+                    "/articulo/delete-carrito/*",
+                    "/direccion/**",
+                    "/tarjeta/**").hasRole("CLIENTE")
             .requestMatchers("/", "/**",
                     "/usuario/alta-usuario",
                     "/usuario/registro-usuario",
@@ -62,7 +64,7 @@ public class SecurityConfig  {
                         .loginProcessingUrl("/autenticacion")
                         .usernameParameter("email")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/usuario/alta-usuario", true));
+                        .defaultSuccessUrl("/usuario/menu-usuario", true));
         return http.build();
     }
 

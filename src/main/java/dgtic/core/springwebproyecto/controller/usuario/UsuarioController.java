@@ -10,6 +10,9 @@ import dgtic.core.springwebproyecto.service.usuario.UsuarioService;
 import dgtic.core.springwebproyecto.validation.UsuarioValidacion;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,7 +59,7 @@ public class UsuarioController {
             Integer usuarioId = usuarioEntity.getId();
             flash.addFlashAttribute("success", "Se almaceno con éxito");
             flash.addFlashAttribute("usuarioId", usuarioId);
-            return "redirect:/usuario/menu-usuario/"+usuarioId;
+            return "redirect:/usuario/menu-usuario";
         } catch(Exception ex){
             ObjectError er=new ObjectError("Duplicados","El correo ya existe");
             model.addAttribute("warning","Correo repetido");
@@ -76,11 +79,16 @@ public class UsuarioController {
                 "apMaterno", new MayusculasConverter());
     }
 
-    @GetMapping("menu-usuario/{usuarioId}")
-    public String paginaMenu(@PathVariable("usuarioId") Integer id, Model model,
-                              RedirectAttributes flash) {
-        model.addAttribute("usuarioId", id);
-        Usuario usuarioEntity = usuarioService.buscarUsuarioId(id);
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("menu-usuario")
+    public String paginaMenu(Model model,
+                             RedirectAttributes flash,
+                             Authentication authentication) {
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        Integer usuarioId = usuario.getId();
+
+        model.addAttribute("usuarioId", usuarioId);
+        Usuario usuarioEntity = usuarioService.buscarUsuarioId(usuarioId);
         try{
             Direccion direccionEntity = direccionService.buscarDireccionUsuario(usuarioEntity);
             model.addAttribute("direccionEntity", direccionEntity);
@@ -96,10 +104,14 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("eliminar-usuario/{id}")
-    public String eliminarUsuario(@PathVariable("id") Integer id, Model model,
-                                  RedirectAttributes flash) {
-        Usuario us = usuarioService.buscarUsuarioId(id);
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("eliminar-usuario")
+    public String eliminarUsuario(RedirectAttributes flash,
+                                  Authentication authentication) {
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        Integer usuarioId = usuario.getId();
+
+        Usuario us = usuarioService.buscarUsuarioId(usuarioId);
         Direccion dir = direccionService.buscarDireccionUsuario(us);
         Tarjeta tar = tarjetaService.buscarTarjetaUsuario(us);
         if(dir != null){
@@ -108,15 +120,20 @@ public class UsuarioController {
         if(tar != null){
             tarjetaService.borrar(tar.getId());
         }
-        usuarioService.borrar(id);
+        usuarioService.borrar(usuarioId);
         flash.addFlashAttribute("success", "El usuario se borro correctamente");
         return "redirect:/";
     }
 
-    @GetMapping("modificar-usuario/{id}")
-    public String modificarUsuario(@PathVariable("id") Integer id, Model model) {
-        Usuario usuario = usuarioService.buscarUsuarioId(id);
-        model.addAttribute("usuarioEntity", usuario);
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("modificar-usuario")
+    public String modificarUsuario(Model model,
+                                   Authentication authentication) {
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        Integer usuarioId = usuario.getId();
+
+        Usuario us = usuarioService.buscarUsuarioId(usuarioId);
+        model.addAttribute("usuarioEntity", us);
         return "usuario/alta-usuario";
     }
 
