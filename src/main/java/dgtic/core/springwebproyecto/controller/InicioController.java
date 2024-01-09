@@ -1,8 +1,10 @@
 package dgtic.core.springwebproyecto.controller;
 
 import dgtic.core.springwebproyecto.service.articulo.ArticuloService;
+import dgtic.core.springwebproyecto.service.authentication.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +23,18 @@ public class InicioController {
     @Autowired
     ArticuloService articuloService;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
     @GetMapping("/")
-    public String inicioPagina(Model model)  {
+    public String inicioPagina(Model model,
+                               Authentication authentication)  {
         SimpleDateFormat formateadorFecha = new SimpleDateFormat("dd/MM/yyyy");
         model.addAttribute("nombreAplicacion",nombreApp);
         model.addAttribute("fecha",formateadorFecha.format(new Date()));
         model.addAttribute("contenido", "Bienvenido");
         model.addAttribute("archivo", archivoRuta);
+        model.addAttribute("principal", authenticationService.getPrincipal());
         model.addAttribute("articulos", articuloService.findAll());
         return "principal";
     }

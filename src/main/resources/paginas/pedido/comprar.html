@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="plantillas/plantilla :: head"></head>
+<body>
+<header th:replace="plantillas/plantilla :: header"></header>
+<!-- Page Content -->
+<div class="container">
+    <!-- Page Heading/Breadcrumbs -->
+    <div class="mt-4 mb-3">
+        <h3>Resumen de la orden</h3>
+    </div>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+        <li class="breadcrumb-item active"><a th:href="@{/articulo/ver-carrito}">Carrito</a></li>
+        <li class="breadcrumb-item active">Detalle Orden</li>
+    </ol>
+
+    <!-- Blog Post -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            DATOS DEL USUARIO
+                        </h5>
+                        <h6 th:text=" 'Nombre: '+ ${usuarioEntity.nombre}"> </h6>
+                        <h6 th:text="'Correo: '+  ${usuarioEntity.email}"></h6>
+                        <h6 th:text="'Dirección: '+ ${direccionEntity.calle} + ' ' +
+                                                    ${direccionEntity.numero} + ' ' +
+                                                    ${direccionEntity.colonia} + ' ' +
+                                                    ${direccionEntity.codigoPostal}+ ' ' +
+                                                    ${direccionEntity.municipio}+ ' ' +
+                                                    ${direccionEntity.estado}" ></h6>
+                        <br>
+                        <h5 class="card-title">
+                            SELECCIONE FORMA DE PAGO
+                        </h5>
+                        <div class="alert alert-light" role="alert">
+                            <div class="form-check" th:each="mp: ${metodoPago}">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                       th:value="${mp.id}" unchecked>
+                                <label class="form-check-label" for="exampleRadios1" th:text="${mp.nombre}"></label>
+                            </div>
+                        </div>
+                        <div class="container" th:if="${usuarioEntity.tarjeta != null}" >
+                        <h5 class="card-title">
+                            SELECCIONE UNA TARJETA
+                        </h5>
+                        <div class="alert alert-light" role="alert">
+                            <table th:if="${usuarioEntity.tarjeta != null}" class="table table-striped table-hover table-sm">
+                                <thead class="table-dark table-bordered">
+                                <tr>
+                                    <th scope="col">Seleccionar</th>
+                                    <th scope="col">Número</th>
+                                    <th scope="col">Tipo</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="t: ${usuarioEntity.tarjeta}">
+                                    <td><input class="form-check-input" type="checkbox" value=""></td>
+                                    <td th:text="${t.numeroTarjeta}"></td>
+                                    <td th:text="${t.tipoTarjeta}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+
+
+                        <h5 class="card-title">
+                            PRODUCTOS
+                        </h5>
+                        <div class="alert alert-light" role="alert">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="dorden:${carrito}">
+                                    <td th:text="${dorden.detalleCompraId.articulo.nombre}"></td>
+                                    <td th:text="${dorden.detalleCompraId.articulo.precio}"></td>
+                                    <td th:text="${dorden.cantidad}"></td>
+                                    <td th:text="${dorden.precioTotal}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3">
+                    <h2 class="card-title">Resumen Orden</h2>
+
+                    <ul class="list-group">
+                        <li class="list-group-item"><h5 th:text=" 'Total: '+ ${pedido.total} "> </h5></li>
+                        <a th:href="@{saveOrder}" class="btn btn-outline-success">Cofirmar compra</a>
+                        <li class="list-group-item"><h5> </h5></li>
+                        <a th:href="@{saveOrder}" class="btn btn-outline-danger">Cancelar</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+<footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

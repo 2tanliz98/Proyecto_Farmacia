@@ -48,6 +48,8 @@ public class SecurityConfig  {
             .requestMatchers("/usuario/menu-usuario",
                     "/usuario/eliminar-usuario/",
                     "/usuario/modificar-usuario/",
+                    "/articulo/ver-carrito",
+                    "usuario/inicio",
                     "/direccion/**",
                     "/tarjeta/**").hasRole("CLIENTE")
             .requestMatchers("/", "/**",
@@ -56,7 +58,6 @@ public class SecurityConfig  {
                     "/usuario/alta-usuario",
                     "/usuario/registro-usuario",
                     "/resources/**").permitAll().anyRequest().permitAll()
-
             .and()
             .formLogin(formLogin ->
                 formLogin
@@ -64,7 +65,7 @@ public class SecurityConfig  {
                         .loginProcessingUrl("/autenticacion")
                         .usernameParameter("email")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/usuario/menu-usuario", true));
+                        .defaultSuccessUrl("/usuario/inicio", true));
         return http.build();
     }
 

@@ -31,13 +31,17 @@ public class Direccion {
     //@Positive(message = "Ingrese un número válido")
     @Pattern(regexp = "[0-9]{1,6}",message = "Número no válido")
     private String numero;
+
     @Column(name = "codigo_postal", length = 5)
     @Pattern(regexp = "[0-9]{5}",message = "Código Postal no válido")
     private String codigoPostal;
+
     @Column(length = 50)
     private String colonia;
+
     @Column(length = 50)
     private String municipio;
+
     @Column(name="entidad_federativa", length=50)
     private String estado;
 

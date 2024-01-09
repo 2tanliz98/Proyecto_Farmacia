@@ -48,8 +48,11 @@
                     <h2 class="card-title">SUBTOTAL</h2>
 
                     <ul class="list-group">
-                        <li class="list-group-item"><h5 th:text="${pedido.total}"></h5></li>
-                        <a th:href="@{/order}" class="btn btn-dark">Realizar compra</a>
+<!--                        <form action="/articulo/detalle-orden"  method="post">-->
+                            <li class="list-group-item"><h5 th:text="${pedido.total}"></h5></li>
+                            <a th:href="@{/articulo/detalle-orden}" type="submit"
+                                    class="btn btn-dark">Realizar compra</a>
+<!--                        </form>-->
                     </ul>
                 </div>
 

@@ -2,17 +2,28 @@ package dgtic.core.springwebproyecto.controller.usuario;
 
 import dgtic.core.springwebproyecto.converter.MayusculasConverter;
 import dgtic.core.springwebproyecto.model.Direccion;
+import dgtic.core.springwebproyecto.model.Pedido;
 import dgtic.core.springwebproyecto.model.Tarjeta;
 import dgtic.core.springwebproyecto.model.Usuario;
+import dgtic.core.springwebproyecto.service.authentication.AuthenticationService;
 import dgtic.core.springwebproyecto.service.direccion.DireccionService;
+import dgtic.core.springwebproyecto.service.pedido.PedidoService;
 import dgtic.core.springwebproyecto.service.tarjeta.TarjetaService;
 import dgtic.core.springwebproyecto.service.usuario.UsuarioService;
+import dgtic.core.springwebproyecto.util.RenderPagina;
 import dgtic.core.springwebproyecto.validation.UsuarioValidacion;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +45,10 @@ public class UsuarioController {
     TarjetaService tarjetaService;
     @Autowired
     DireccionService direccionService;
+    @Autowired
+    PedidoService pedidoService;
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @GetMapping("alta-usuario")
     public String paginaRegistro(Model model) {
@@ -59,7 +74,7 @@ public class UsuarioController {
             Integer usuarioId = usuarioEntity.getId();
             flash.addFlashAttribute("success", "Se almaceno con éxito");
             flash.addFlashAttribute("usuarioId", usuarioId);
-            return "redirect:/usuario/menu-usuario";
+            return "redirect:/usuario/inicio";
         } catch(Exception ex){
             ObjectError er=new ObjectError("Duplicados","El correo ya existe");
             model.addAttribute("warning","Correo repetido");
@@ -83,7 +98,10 @@ public class UsuarioController {
     @GetMapping("menu-usuario")
     public String paginaMenu(Model model,
                              RedirectAttributes flash,
-                             Authentication authentication) {
+                             Authentication authentication,
+                             @RequestParam(name = "page", defaultValue = "0") int page) {
+        model.addAttribute("principal", authenticationService.getPrincipal());
+
         Usuario usuario = (Usuario) authentication.getPrincipal();
         Integer usuarioId = usuario.getId();
 
@@ -92,16 +110,20 @@ public class UsuarioController {
         try{
             Direccion direccionEntity = direccionService.buscarDireccionUsuario(usuarioEntity);
             model.addAttribute("direccionEntity", direccionEntity);
-        }catch (Exception ex){
+        }catch (Exception ex) {
             ObjectError er = new ObjectError("Error", ex.getMessage());
             model.addAttribute("warning", "Agrege su información domicilial");
             model.addAttribute("warning", ex.getMessage());
         }
-        finally {
-            model.addAttribute("operacion", "Inicio de sesión");
-            model.addAttribute("usuarioEntity", usuarioEntity);
-            return "usuario/menu-usuario";
-        }
+
+        Pageable pagReq = PageRequest.of(page, 3);
+        Page<Pedido> pedidos = pedidoService.findPedidoByUsuario(pagReq, usuario);
+        RenderPagina<Pedido> render = new RenderPagina<>("lista-pedidos",pedidos);
+        model.addAttribute("pedidos", pedidos);
+        model.addAttribute("page", render);
+        model.addAttribute("operacion", "Inicio de sesión");
+        model.addAttribute("usuarioEntity", usuarioEntity);
+        return "usuario/menu-usuario";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -144,6 +166,29 @@ public class UsuarioController {
         return "usuario/login";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/inicio")
+    public String paginaInicio(Model model){
+        return "usuario/inicio";
+    }
+
+//    @GetMapping("/final")
+//    public String paginaFinal(){
+//        return "/";
+//    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("cerrar-sesion")
+    public String cierreSesion(HttpServletRequest request, HttpServletResponse response) {
+        // autenticación actual
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            // Cierre de sesión
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+        return "usuario/final";
+    }
 
 
 }
