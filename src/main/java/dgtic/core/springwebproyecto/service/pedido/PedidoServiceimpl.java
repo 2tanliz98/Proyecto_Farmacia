@@ -41,5 +41,10 @@ public class  PedidoServiceimpl implements PedidoService{
         return pedidoRepository.findPedidoByUsuario(pageable, usuario);
     }
 
+    @Override
+    public void guardar(Pedido pedido) {
+        pedidoRepository.save(pedido);
+    }
+
 
 }

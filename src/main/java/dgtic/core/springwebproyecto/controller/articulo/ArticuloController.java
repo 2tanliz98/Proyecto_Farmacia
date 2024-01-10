@@ -3,10 +3,12 @@ package dgtic.core.springwebproyecto.controller.articulo;
 import dgtic.core.springwebproyecto.model.*;
 import dgtic.core.springwebproyecto.service.authentication.AuthenticationService;
 import dgtic.core.springwebproyecto.service.cosmetico.CosmeticoService;
+import dgtic.core.springwebproyecto.service.deatlleCompra.DetalleCompraService;
 import dgtic.core.springwebproyecto.service.direccion.DireccionService;
 import dgtic.core.springwebproyecto.service.medicamento.MedicamentoService;
 import dgtic.core.springwebproyecto.service.articulo.ArticuloService;
 import dgtic.core.springwebproyecto.service.metodoPago.MetodoPagoService;
+import dgtic.core.springwebproyecto.service.pedido.PedidoService;
 import dgtic.core.springwebproyecto.service.usuario.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -47,7 +49,13 @@ public class ArticuloController {
     MetodoPagoService metodoPagoService;
 
     @Autowired
-    private AuthenticationService authenticationService;
+    DetalleCompraService detalleCompraService;
+
+    @Autowired
+    AuthenticationService authenticationService;
+
+    @Autowired
+    PedidoService pedidoService;
 
 
     // Almacena los artículos del carrito de compras en una lista de carritos
@@ -115,6 +123,7 @@ public class ArticuloController {
 
         pedido.setTotal(sumaTotal);
         pedido.setFecha(new Date());
+
         model.addAttribute("carrito", detalleSesion);
         model.addAttribute("pedido", pedido);
 
@@ -198,8 +207,25 @@ public class ArticuloController {
 
     @PreAuthorize("isAuthenticated() ")
     @PostMapping("guardar-orden")
-    public String confirmarOrden(Model model){
+    public String confirmarOrden(HttpServletRequest request){
+        String metodoPagoId = request.getParameter("metodoPago");
 
-        return "redirec:/";
+        for(DetalleCompra dc : detalleSesion){
+            detalleCompraService.save(dc);
+            Articulo articuloActualiza = dc.getDetalleCompraId().getArticulo();
+            articuloActualiza.setUnidades(articuloActualiza.getUnidades()-dc.getCantidad());
+        }
+        MetodoPago metodoPago = metodoPagoService.findById(Integer.parseInt(metodoPagoId));
+        Usuario usuario = (Usuario) authenticationService.getPrincipal();
+        pedido.setUsuario(usuario);
+
+        pedido.setMetodoPago(metodoPago);
+        pedidoService.guardar(pedido);
+
+        detalleSesion.clear();
+        pedido = new Pedido();
+
+        return "redirect:/";
     }
+
 }

@@ -80,8 +80,7 @@ INSERT INTO cat_farmacos (id_articulo,  ingrediente_activo) VALUES
 INSERT INTO metodo_pago(id_metodo_pago,nombre,descripcion) VALUES
 (1, 'Tarjeta de Crédito', 'Pago con tarjeta de crédito'),
 (2, 'Transferencia Bancaria', 'Pago mediante transferencia bancaria'),
-(3, 'PayPal', 'Pago a través de PayPal'),
-(4, 'Efectivo', 'Pago en efectivo en la entrega');
+(3, 'Efectivo', 'Pago en efectivo en la entrega');
 
 -- Datos para la tabla pedido
 INSERT INTO pedido (id_pedido, metodo_pago, fecha, usuario, total) VALUES
@@ -108,4 +107,13 @@ INSERT INTO detalle_compra (pedido, articulo, cantidad) VALUES
 (6, 8, 3),
 (7, 9, 1),
 (8, 10, 2);
+
+-- Datos para la tabla estatus (de pedido)
+-- DELETE FROM estatus;
+-- DROP  TABLE historico_estatus_pedido;
+-- DROP  TABLE estatus;
+INSERT INTO estatus(nombre, descripcion) VALUES
+('EN PROCESO','El pedido se está verificando'),
+('ENVIADO','El pedido ha sido enviado'),
+('RECIBIDO','El pedido ha sido recibido por el usuario cliente');
 

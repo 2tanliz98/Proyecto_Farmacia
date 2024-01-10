@@ -14,4 +14,6 @@ public interface PedidoService {
     Pedido buscarPedidoId(Integer id);
 
     Page<Pedido> findPedidoByUsuario(Pageable pageable, Usuario usuario);
+
+    void guardar(Pedido pedido);
 }
