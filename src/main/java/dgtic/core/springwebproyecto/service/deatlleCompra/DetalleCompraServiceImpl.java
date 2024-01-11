@@ -29,6 +29,6 @@ public class DetalleCompraServiceImpl implements DetalleCompraService{
 
     @Override
     public void save(DetalleCompra dc) {
-
+        detalleCompraRepository.save(dc);
     }
 }

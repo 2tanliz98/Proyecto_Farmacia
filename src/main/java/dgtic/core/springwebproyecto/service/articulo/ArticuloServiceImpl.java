@@ -23,4 +23,9 @@ public class ArticuloServiceImpl implements ArticuloService {
         return optional;
     }
 
+    @Override
+    public void update(Articulo articulo) {
+        articuloRepository.save(articulo);
+    }
+
 }

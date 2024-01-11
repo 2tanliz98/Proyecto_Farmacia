@@ -21,6 +21,6 @@ public class DetalleCompra {
 
     private Integer cantidad;
 
-    @Column(precision = 8, scale = 2)
+    @Column(name = "suma_total", precision = 8, scale = 2)
     private BigDecimal precioTotal;
 }

@@ -101,7 +101,18 @@
                         <td th:text="${p.fecha}"></td>
                         <td th:text="${p.metodoPago.descripcion}"></td>
                         <td th:text="${p.total}"></td>
-                        <td th:text="${}"></td>
+                        <td>
+                            <th:block th:if="${not #lists.isEmpty(p.historicoEstatusList)}">
+                                <!-- Obtener el último elemento de la lista -->
+                                <th:block th:with="ultimoEstatus=${p.historicoEstatusList[__${#lists.size(p.historicoEstatusList) - 1}__]}">
+                                    <p th:text="${ultimoEstatus.historicoEstatusId.estatus.nombre}"></p>
+                                </th:block>
+                            </th:block>
+                            <th:block th:if="${#lists.isEmpty(p.historicoEstatusList)}">
+                                <!-- Imprimir algo diferente cuando la lista esté vacía -->
+                                <p>Sin estado</p>
+                            </th:block>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -113,5 +124,7 @@
 
     </main>
     <footer th:replace="plantillas/plantilla :: footer"></footer>
+
+
 </body>
 </html>

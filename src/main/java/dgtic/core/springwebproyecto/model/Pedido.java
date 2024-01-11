@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,6 +35,9 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name="usuario")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "historicoEstatusId.pedido", fetch = FetchType.EAGER)
+    private List<HistoricoEstatus> historicoEstatusList; //estatus pedido
 
     @Override
     public String toString() {

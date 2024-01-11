@@ -5,6 +5,8 @@ import dgtic.core.springwebproyecto.service.authentication.AuthenticationService
 import dgtic.core.springwebproyecto.service.cosmetico.CosmeticoService;
 import dgtic.core.springwebproyecto.service.deatlleCompra.DetalleCompraService;
 import dgtic.core.springwebproyecto.service.direccion.DireccionService;
+import dgtic.core.springwebproyecto.service.estatusPedido.EstatusPedidoService;
+import dgtic.core.springwebproyecto.service.historicoEstatus.HistoricoEstatusService;
 import dgtic.core.springwebproyecto.service.medicamento.MedicamentoService;
 import dgtic.core.springwebproyecto.service.articulo.ArticuloService;
 import dgtic.core.springwebproyecto.service.metodoPago.MetodoPagoService;
@@ -56,6 +58,12 @@ public class ArticuloController {
 
     @Autowired
     PedidoService pedidoService;
+
+    @Autowired
+    HistoricoEstatusService historicoService;
+
+    @Autowired
+    EstatusPedidoService estatusService;
 
 
     // Almacena los artículos del carrito de compras en una lista de carritos
@@ -178,18 +186,6 @@ public class ArticuloController {
     public String comprar(Model model,
                           HttpServletRequest request,
                           HttpServletResponse response) throws IOException {
-//        HttpSession session = request.getSession();
-//        session.setAttribute("datoTransferible", detalleSesion);
-//        String uniqueIdC = UUID.randomUUID().toString();
-//        session.setAttribute("identificadorTransferenciaC", uniqueIdC);
-//
-//        session.setAttribute("pedido", pedido);
-//        String uniqueIdP = UUID.randomUUID().toString();
-//        session.setAttribute("identificadorTransferenciaP", uniqueIdP);
-
-//        response.sendRedirect("/pedido/detalle-orden");
-//        return "/pedido/comprar";
-
         Usuario usuario = (Usuario) authenticationService.getPrincipal();
         Integer usuarioId = usuario.getId();
 
@@ -210,11 +206,6 @@ public class ArticuloController {
     public String confirmarOrden(HttpServletRequest request){
         String metodoPagoId = request.getParameter("metodoPago");
 
-        for(DetalleCompra dc : detalleSesion){
-            detalleCompraService.save(dc);
-            Articulo articuloActualiza = dc.getDetalleCompraId().getArticulo();
-            articuloActualiza.setUnidades(articuloActualiza.getUnidades()-dc.getCantidad());
-        }
         MetodoPago metodoPago = metodoPagoService.findById(Integer.parseInt(metodoPagoId));
         Usuario usuario = (Usuario) authenticationService.getPrincipal();
         pedido.setUsuario(usuario);
@@ -222,10 +213,36 @@ public class ArticuloController {
         pedido.setMetodoPago(metodoPago);
         pedidoService.guardar(pedido);
 
+        // actualiza el inventario de articulos y guarda los detalles de la compra
+        for(DetalleCompra dc : detalleSesion){
+            detalleCompraService.save(dc);
+            Articulo articuloActualiza = dc.getDetalleCompraId().getArticulo();
+            articuloActualiza.setUnidades(articuloActualiza.getUnidades()-dc.getCantidad());
+            articuloService.update(articuloActualiza);
+        }
+
+        Integer estatusId = Aleatorio();
+        EstatusPedido estatusNuevo = estatusService.findById(estatusId);
+        HistoricoEstatus historicoNuevo = new HistoricoEstatus();
+        HistoricoEstatusId historicoNuevoId = new HistoricoEstatusId(pedido,estatusNuevo);
+        historicoNuevo.setHistoricoEstatusId(historicoNuevoId);
+        historicoNuevo.setFecha(new Date());
+        historicoService.guardarEstatusNuevo(historicoNuevo);
+
         detalleSesion.clear();
         pedido = new Pedido();
 
         return "redirect:/";
     }
+
+    private int Aleatorio() {
+        // Instancia de Random
+        Random random = new Random();
+        // Generar un valor aleatorio entre 1 y 3 para encontrar el estado
+        int valorAleatorio = random.nextInt(3) + 1;
+
+        return valorAleatorio;
+    }
+
 
 }

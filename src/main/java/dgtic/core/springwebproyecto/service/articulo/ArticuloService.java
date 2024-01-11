@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface ArticuloService {
     List<Articulo> findAll();
     Optional<Articulo> findbyId(Integer id);
+
+    void update(Articulo articulo);
 }

@@ -117,3 +117,10 @@ INSERT INTO estatus(nombre, descripcion) VALUES
 ('ENVIADO','El pedido ha sido enviado'),
 ('RECIBIDO','El pedido ha sido recibido por el usuario cliente');
 
+
+INSERT INTO historico_estatus_pedido(pedido,estatus,fecha) VALUES
+(13,1,'2024-01-09'),
+(12,2,'2024-01-09'),
+(11,1,'2024-01-09'),
+(11,2,'2024-01-09'),
+(11,3,'2024-01-09');

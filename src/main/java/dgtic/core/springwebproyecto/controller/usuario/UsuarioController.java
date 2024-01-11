@@ -1,12 +1,10 @@
 package dgtic.core.springwebproyecto.controller.usuario;
 
 import dgtic.core.springwebproyecto.converter.MayusculasConverter;
-import dgtic.core.springwebproyecto.model.Direccion;
-import dgtic.core.springwebproyecto.model.Pedido;
-import dgtic.core.springwebproyecto.model.Tarjeta;
-import dgtic.core.springwebproyecto.model.Usuario;
+import dgtic.core.springwebproyecto.model.*;
 import dgtic.core.springwebproyecto.service.authentication.AuthenticationService;
 import dgtic.core.springwebproyecto.service.direccion.DireccionService;
+import dgtic.core.springwebproyecto.service.historicoEstatus.HistoricoEstatusService;
 import dgtic.core.springwebproyecto.service.pedido.PedidoService;
 import dgtic.core.springwebproyecto.service.tarjeta.TarjetaService;
 import dgtic.core.springwebproyecto.service.usuario.UsuarioService;
@@ -32,6 +30,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "usuario")
@@ -118,11 +118,12 @@ public class UsuarioController {
 
         Pageable pagReq = PageRequest.of(page, 3);
         Page<Pedido> pedidos = pedidoService.findPedidoByUsuario(pagReq, usuario);
-        RenderPagina<Pedido> render = new RenderPagina<>("lista-pedidos",pedidos);
+        RenderPagina<Pedido> render = new RenderPagina<>("menu-usuario",pedidos);
         model.addAttribute("pedidos", pedidos);
         model.addAttribute("page", render);
-        model.addAttribute("operacion", "Inicio de sesión");
+
         model.addAttribute("usuarioEntity", usuarioEntity);
+
         return "usuario/menu-usuario";
     }
 
