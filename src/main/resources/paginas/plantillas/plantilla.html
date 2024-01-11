@@ -17,31 +17,30 @@
 <body>
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-black">
-
-                <div class="row container">
-                        <div class="col-md-3">
-                            <a class="navbar-brand" style="color:white" th:href="@{/}"><h1>Farmacia</h1></a>
-                        </div>
-<!--                        <div class="col-md-6">-->
-<!--                            <form class="form d-flex align-items-center">-->
-<!--                                <input class="form-control" type="search" placeholder="Search">-->
-<!--                                <button class="btn btn-outline-success " type="submit">Buscar</button>-->
-<!--                            </form>-->
-<!--                        </div>-->
-                        <div class="col-md-8 navbar"></div>
-                        <div class="col-md-1 navbar">
-                            <a class="btn btn-outline-primary" th:href="@{/articulo/ver-carrito}">
-                                <i class="fa-solid fa-cart-shopping"></i></a>
-                        </div>
-                        <div class="col-md-1 navbar" th:if="${principal == null}">
-                            <a class="btn btn-outline-primary" th:href="@{/usuario/login}">
-                                <i class="fa-solid fa-user"></i></i></a>
-                        </div>
-                        <div class="col-md-1 navbar" th:if="${principal != null}">
-                            <a class="btn btn-outline-primary" th:href="@{/usuario/menu-usuario}">
-                                <i class="fa-solid fa-user"></i></a>
-                        </div>
-                </div>
+        <div class="row container">
+            <div class="col-md-3">
+                <a class="navbar-brand" style="color:white" th:href="@{/}"><h1>Farmacia</h1></a>
+            </div>
+            <div class="col-md-6">
+                <form th:action="@{/buscar}" method="post"
+                      class="form d-flex align-items-center">
+                    <input class="form-control" type="text" name="query" placeholder="Buscar...">
+                    <button class="btn btn-outline-success " type="submit">Buscar</button>
+                </form>
+            </div>
+            <div class="col-md-1 navbar">
+                <a class="btn btn-outline-primary" th:href="@{/articulo/ver-carrito}">
+                    <i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+            <div class="col-md-1 navbar" th:if="${principal == null}">
+                <a class="btn btn-outline-primary" th:href="@{/usuario/login}">
+                    <i class="fa-solid fa-user"></i></i></a>
+            </div>
+            <div class="col-md-1 navbar" th:if="${principal != null}">
+                <a class="btn btn-outline-primary" th:href="@{/usuario/menu-usuario}">
+                    <i class="fa-solid fa-user"></i></a>
+            </div>
+        </div>
     </nav>
 </header>
 <!-- Container -->

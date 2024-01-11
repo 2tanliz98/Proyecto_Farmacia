@@ -6,6 +6,7 @@
 //import com.lowagie.text.pdf.PdfPTable;
 //import com.lowagie.text.pdf.PdfWriter;
 //import dgtic.core.springwebproyecto.model.DetalleCompra;
+//import dgtic.core.springwebproyecto.model.Pedido;
 //import jakarta.servlet.http.HttpServletRequest;
 //import jakarta.servlet.http.HttpServletResponse;
 //import org.springframework.stereotype.Component;
@@ -29,20 +30,18 @@
 //        celda.setBackgroundColor(new Color(167,218,255));
 //        celda.setPadding(8f);
 //        tabla.addCell(celda);
-//        tabla.addCell("Fecha Reservación");
-//        tabla.addCell("Fecha Inicio");
-//        tabla.addCell("Hotel");
-//        tabla.addCell("Habitación");
-//        tabla.addCell("Precio");
+//        tabla.addCell("Dirección");
+//        tabla.addCell("Método de pago");
+//        tabla.addCell("Detalle orden");
+//        tabla.addCell("Total");
 //        SimpleDateFormat f=new SimpleDateFormat("dd/MM/yyyy");
-//        for (ReservacionEntity r:datos) {
-//
-//            tabla.addCell(r.getCliente().getNombre() + " "+r.getCliente().getApellidoPaterno());
-//            tabla.addCell(f.format(r.getFechaReservacion()));
-//            tabla.addCell(f.format(r.getFechaInicio()));
-//            tabla.addCell(r.getHabitacion().getHotel().getNombre());
-//            tabla.addCell(r.getHabitacion().getNombre());
-//            tabla.addCell(String.valueOf(r.getHabitacion().getPrecio()));
+//        for (Pedido p:datos) {
+//            tabla.addCell(p.getCliente().getNombre() + " "+p.getCliente().getApellidoPaterno());
+//            tabla.addCell(f.format(p.getFechaReservacion()));
+//            tabla.addCell(f.format(p.getFechaInicio()));
+//            tabla.addCell(p.getHabitacion().getHotel().getNombre());
+//            tabla.addCell(p.getHabitacion().getNombre());
+//            tabla.addCell(String.valueOf(p.getHabitacion().getPrecio()));
 //        }
 //
 //        document.add(tabla);
