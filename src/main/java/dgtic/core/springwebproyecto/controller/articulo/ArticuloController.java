@@ -80,7 +80,7 @@ public class ArticuloController {
         return "articulo/articulo-home";
     }
 
-    //Agregar elementos al carrito de compras
+
     @PostMapping("/add-carrito")
     public String addArticulo(@RequestParam Integer articuloId,
                               @RequestParam Integer cantidad,
@@ -149,6 +149,7 @@ public class ArticuloController {
     }
 
     // quitar un producto del carrito
+
     @GetMapping("delete-carrito/{id}")
     public String deleteProductoCart(@PathVariable Integer id, Model model) {
         model.addAttribute("principal", authenticationService.getPrincipal());
@@ -182,6 +183,7 @@ public class ArticuloController {
         return "articulo/articulo-home/"+id;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("detalle-orden")
     public String comprar(Model model,
                           HttpServletRequest request,
@@ -190,7 +192,12 @@ public class ArticuloController {
         Integer usuarioId = usuario.getId();
 
         Usuario us = usuarioService.buscarUsuarioId(usuarioId);
-        Direccion direccion = direccionService.buscarDireccionUsuario(usuario);
+        Direccion direccion = null;
+        try{
+            direccion = direccionService.buscarDireccionUsuario(usuario);
+        }catch (DireccionNotFoundException de){
+            return "/direccion/registro-direccion";
+        }
 
         model.addAttribute("principal", authenticationService.getPrincipal());
         model.addAttribute("usuarioEntity", usuario);
@@ -201,7 +208,7 @@ public class ArticuloController {
         return "pedido/comprar";
     }
 
-    @PreAuthorize("isAuthenticated() ")
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("guardar-orden")
     public String confirmarOrden(HttpServletRequest request){
         String metodoPagoId = request.getParameter("metodoPago");
@@ -236,11 +243,8 @@ public class ArticuloController {
     }
 
     private int Aleatorio() {
-        // Instancia de Random
         Random random = new Random();
-        // Generar un valor aleatorio entre 1 y 3 para encontrar el estado
         int valorAleatorio = random.nextInt(3) + 1;
-
         return valorAleatorio;
     }
 

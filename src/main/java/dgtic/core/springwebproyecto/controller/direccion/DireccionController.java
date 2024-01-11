@@ -39,15 +39,17 @@ public class DireccionController {
     @Autowired
     DireccionValidacion direccionValidacion;
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("alta-direccion")
-    public String paginaRegistro(Model model,
-                                 Authentication authentication) {
-        Usuario usuario = (Usuario) authentication.getPrincipal();
-        Integer usuarioId = usuario.getId();
 
+    @GetMapping("alta-direccion/{usuarioId}")
+    public String paginaRegistro(Model model,
+                                 @PathVariable("usuarioId") Integer usuarioId,
+                                 RedirectAttributes flash,
+                                 Authentication authentication) {
+//        Usuario usuario = (Usuario) authentication.getPrincipal();
+//        Integer usuarioId = usuario.getId();
         Direccion direccionEntity=new Direccion();
-        direccionEntity.setUsuario(usuario);
+        Usuario usuarioEntity = usuarioService.buscarUsuarioId(usuarioId);
+        direccionEntity.setUsuario(usuarioEntity);
         model.addAttribute("operacion","Registro Direccion");
         model.addAttribute("direccionEntity",direccionEntity);
         model.addAttribute("usuarioId",usuarioId);
@@ -71,7 +73,7 @@ public class DireccionController {
             flash.addFlashAttribute("success","Se almaceno con éxito ");
             flash.addFlashAttribute("usuarioId",direccionEntity.getUsuario().getId());
             model.addAttribute("usuarioId",direccionEntity.getUsuario().getId());
-            return "redirect:/usuario/menu-usuario";
+            return "redirect:/usuario/registro-exitoso";
         }catch (Exception ex){
             ObjectError er = new ObjectError("Error",
                     "Ha ocurrido un error al registrar dirección");
@@ -96,9 +98,39 @@ public class DireccionController {
     }
 
     @GetMapping("modificar-direccion/{id}")
-    public String modificarDireccion(@PathVariable("id") Integer id,Model model){
+    public String paginaModificar(Model model,
+                                 @PathVariable("id") Integer id) {
+        Direccion direccionEntity= direccionService.buscarDireccionId(id);
+        model.addAttribute("operacion","Modificar Direccion");
+        model.addAttribute("direccionEntity",direccionEntity);
+        return "direccion/modificar-direccion";
+    }
+
+    @PostMapping("modificar-direccion/{id}")
+    public String modificarDireccion(@PathVariable("id") Integer id,Model model,
+                                     @Valid @ModelAttribute("direccionEntity") Direccion direccionEntity,
+                                     BindingResult result, RedirectAttributes flash){
         Direccion direccion= direccionService.buscarDireccionId(id);
         model.addAttribute("direccionEntity",direccion);
+        if (result.hasErrors()) {
+            for (FieldError e :result.getFieldErrors()) {
+                System.out.println(e.getDefaultMessage());
+                System.out.println(e.getCode());
+            }
+            return "direccion/alta-direccion";
+        }
+        try {
+            direccionService.guardar(direccionEntity);
+            flash.addFlashAttribute("success","Se almaceno con éxito ");
+            flash.addFlashAttribute("usuarioId",direccionEntity.getUsuario().getId());
+            model.addAttribute("usuarioId",direccionEntity.getUsuario().getId());
+            return "redirect:/usuario/menu-usuario";
+        }catch (Exception ex){
+            ObjectError er = new ObjectError("Error",
+                    "Ha ocurrido un error al registrar dirección");
+            model.addAttribute("warning",ex.getMessage());
+            result.addError(er);
+        }
         return "direccion/alta-direccion";
     }
 

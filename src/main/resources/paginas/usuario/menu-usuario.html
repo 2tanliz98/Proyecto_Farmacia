@@ -5,6 +5,10 @@
 <body>
     <header th:replace="plantillas/plantilla :: header"></header>
     <main class="container text-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+            <li class="breadcrumb-item active">Mi cuenta</li>
+        </ol>
 
     <h1>Mi cuenta</h1><br>
         <div class="container align-content-end">
@@ -27,9 +31,9 @@
                 <div class="col-lg-12 btn btn-outline-primary">
                     <a class="dropdown-item" th:href="@{/usuario/eliminar-usuario}">Eliminar cuenta</a>
                 </div>
-                <div class="col-lg-12 btn btn-outline-primary" th:if="${direccionEntity == null}">
-                    <a class="dropdown-item" th:href="@{/direccion/alta-direccion}">Registrar domicilio</a>
-                </div>
+<!--                <div class="col-lg-12 btn btn-outline-primary" th:if="${direccionEntity == null}">-->
+<!--                    <a class="dropdown-item" th:href="@{/direccion/alta-direccion/{usuarioId} (usuario=${usuarioId})}">Registrar domicilio</a>-->
+<!--                </div>-->
                 <div class="col-lg-12 btn btn-outline-primary"  th:if="${direccionEntity != null}">
                     <a class="dropdown-item"
                        th:href="@{/direccion/modificar-direccion/{id} (id=${direccionEntity.id})}">
@@ -124,7 +128,5 @@
 
     </main>
     <footer th:replace="plantillas/plantilla :: footer"></footer>
-
-
 </body>
 </html>

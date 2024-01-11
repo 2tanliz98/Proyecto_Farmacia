@@ -12,6 +12,7 @@ public interface ArticuloRepository extends JpaRepository<Articulo,Integer> {
 
     Optional<Articulo> findById(Integer id);
     Page<Articulo> findArticuloByNombreContaining(String query, Pageable pageable);
-
     Page<Articulo> findByNombreLikeIgnoreCase(String nombre, Pageable pageable);
+
+
 }

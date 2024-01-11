@@ -74,7 +74,7 @@ public class UsuarioController {
             Integer usuarioId = usuarioEntity.getId();
             flash.addFlashAttribute("success", "Se almaceno con éxito");
             flash.addFlashAttribute("usuarioId", usuarioId);
-            return "redirect:/usuario/inicio";
+            return "redirect:/direccion/alta-direccion/"+usuarioId;
         } catch(Exception ex){
             ObjectError er=new ObjectError("Duplicados","El correo ya existe");
             model.addAttribute("warning","Correo repetido");
@@ -169,14 +169,16 @@ public class UsuarioController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/inicio")
-    public String paginaInicio(Model model){
+    public String paginaInicio(){
         return "usuario/inicio";
     }
 
-//    @GetMapping("/final")
-//    public String paginaFinal(){
-//        return "/";
-//    }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/registro-exitoso")
+    public String registroExitoso(){
+        return "usuario/registro-exitoso";
+    }
+
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("cerrar-sesion")

@@ -1,6 +1,7 @@
 package dgtic.core.springwebproyecto.service.direccion;
 
 import dgtic.core.springwebproyecto.model.Direccion;
+import dgtic.core.springwebproyecto.model.DireccionNotFoundException;
 import dgtic.core.springwebproyecto.model.Usuario;
 import dgtic.core.springwebproyecto.repositories.DireccionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,10 @@ public class DireccionServiceImpl implements DireccionService {
     @Override
     public Direccion buscarDireccionUsuario(Usuario usuario) {
         Optional<Direccion> op = direccionRepository.findDirectionByUsuario(usuario);
-        return  op.isEmpty() ? null: op.get();
+        if(op.isEmpty()){
+            throw new DireccionNotFoundException(usuario);
+        }
+        return  op.get();
     }
 
     @Override

@@ -4,7 +4,7 @@
 <head th:replace="plantillas/plantilla :: head"></head>
 <body>
     <header th:replace="plantillas/plantilla :: header"></header>
-    <main class="container text-center">
+    <main class="row text-center">
         <h1 th:text="${contenido}"></h1>
         <br/> <img th:src="@{/imagen/inicio-1.png}" />
 
@@ -13,8 +13,8 @@
             <br/>
             <div class="col-lg-3 col-md-6 mb-4" th:each="articulo: ${articulos}">
                 <div class="card h-100">
-                    <img class="card-body"
-                         th:src="@{'/imagenes/'+${articulo.imagen}}" width="100%" height="100%" alt="">
+                    <img class="card-body img-fluid"
+                         th:src="@{'/imagenes/'+${articulo.imagen}}" width="80%" height="80%" alt="">
                     <div class="card-body">
                         <p class="card-text" th:text="${articulo.nombre}"></p>
                     </div>
