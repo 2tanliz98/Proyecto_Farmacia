@@ -6,15 +6,18 @@
     <header th:replace="plantillas/plantilla :: header"></header>
     <main class="row text-center">
         <h1 th:text="${contenido}"></h1>
-        <br/> <img th:src="@{/imagen/inicio-1.png}" />
+        <br/>
+<!--        <img th:src="@{/imagen/inicio-1.png}" />-->
 
         <!-- Page Features -->
         <div class="row text-center">
             <br/>
             <div class="col-lg-3 col-md-6 mb-4" th:each="articulo: ${articulos}">
                 <div class="card h-100">
-                    <img class="card-body img-fluid"
+                    <a class="card-body" th:href="@{/articulo/articulo-home/{articuloId}(articuloId=${articulo.articuloId})}">
+                        <img class=" img-fluid"
                          th:src="@{'/imagenes/'+${articulo.imagen}}" width="80%" height="80%" alt="">
+                    </a>
                     <div class="card-body">
                         <p class="card-text" th:text="${articulo.nombre}"></p>
                     </div>

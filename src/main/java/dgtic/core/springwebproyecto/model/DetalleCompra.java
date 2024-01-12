@@ -23,4 +23,13 @@ public class DetalleCompra {
 
     @Column(name = "suma_total", precision = 8, scale = 2)
     private BigDecimal precioTotal;
+
+    @Override
+    public String toString() {
+        return "DetalleCompra{" +
+                "detalleCompraId=" + detalleCompraId +
+                ", cantidad=" + cantidad +
+                ", precioTotal=" + precioTotal +
+                '}';
+    }
 }

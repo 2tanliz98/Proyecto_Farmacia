@@ -245,19 +245,29 @@ public class ArticuloController {
         return valorAleatorio;
     }
 
-//    @PreAuthorize("isAuthenticated()")
-//    @GetMapping("pdf")
-//    public String generarPdf(@RequestParam Integer pedidoId,
-//                             Model model, SessionStatus status, HttpSession sesion){
-//
-//        Pedido pedido = pedidoService.buscarPedidoId(pedidoId);
-//        //detalle de compra
-//        List<DetalleCompra> detalleLista =  detalleCompraService.findDetalleCompraByDetalleCompraId_Pedido(pedido);
-//        model.addAttribute("detalle",detalleLista);
-//        model.addAttribute("usuario",(Usuario) authenticationService.getPrincipal());
-//
-//        return "/pdf";
-//    }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("pdf")
+    public void generarPdf(@RequestParam Integer pedidoId,
+                             Model model, HttpServletResponse response) throws IOException {
+
+        response.setContentType("aplicacion/pdf");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment,filename=detalle_orden.pdf";
+
+        response.setHeader(headerKey,headerValue);
+
+
+        Pedido pedido = pedidoService.buscarPedidoId(pedidoId);
+        //detalle de compra
+        List<DetalleCompra> detalleLista =  detalleCompraService.findDetalleCompraByDetalleCompraId_Pedido(pedido);
+        model.addAttribute("detalle",detalleLista);
+        model.addAttribute("usuario",(Usuario) authenticationService.getPrincipal());
+
+        ExportPedidoPdf exportPedidoPdf = new ExportPedidoPdf(detalleLista,pedido);
+        exportPedidoPdf.export(response);
+
+        //return "/pdf";
+    }
 
 
 }

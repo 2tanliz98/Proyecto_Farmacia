@@ -97,13 +97,13 @@
                         <th scope="col">Método de pago</th>
                         <th scope="col">TOTAL</th>
                         <th scope="col">Status</th>
-<!--                        <th scope="col">PDF</th>-->
+                        <th scope="col">PDF</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="p: ${pedidos}">
                         <td th:text="${p.pedidoId}"></td>
-                        <td th:text="${p.fecha}"></td>
+                        <td th:text="${#dates.format(p.fecha, 'dd/MM/yyyy')}"></td>
                         <td th:text="${p.metodoPago.descripcion}"></td>
                         <td th:text="${p.total}"></td>
                         <td>
@@ -118,12 +118,12 @@
                                 <p>Sin estado</p>
                             </th:block>
                         </td>
-<!--                        <td>-->
-<!--                            <a class="btn btn-primary btn-xs float-right"-->
-<!--                               th:href="@{'/articulo/pdf' (pedidoId=${p.pedidoId}, format='pdf')}"-->
-<!--                               target="_blank">Descargar</a>-->
-<!--                            <input type="hidden" name="pedidoId" th:value="${p.pedidoId}">-->
-<!--                        </td>-->
+                        <td>
+                            <a class="btn btn-primary btn-xs float-right"
+                               th:href="@{'/articulo/pdf' (pedidoId=${p.pedidoId}, format='pdf')}"
+                               target="_blank">Descargar</a>
+                            <input type="hidden" name="pedidoId" th:value="${p.pedidoId}">
+                        </td>
 
                     </tr>
                     </tbody>
