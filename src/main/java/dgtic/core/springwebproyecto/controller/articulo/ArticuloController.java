@@ -3,7 +3,7 @@ package dgtic.core.springwebproyecto.controller.articulo;
 import dgtic.core.springwebproyecto.model.*;
 import dgtic.core.springwebproyecto.service.authentication.AuthenticationService;
 import dgtic.core.springwebproyecto.service.cosmetico.CosmeticoService;
-import dgtic.core.springwebproyecto.service.deatlleCompra.DetalleCompraService;
+import dgtic.core.springwebproyecto.service.detalleCompra.DetalleCompraService;
 import dgtic.core.springwebproyecto.service.direccion.DireccionService;
 import dgtic.core.springwebproyecto.service.estatusPedido.EstatusPedidoService;
 import dgtic.core.springwebproyecto.service.historicoEstatus.HistoricoEstatusService;
@@ -16,12 +16,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -239,7 +238,7 @@ public class ArticuloController {
         detalleSesion.clear();
         pedido = new Pedido();
 
-        return "redirect:/";
+        return "/pedido/fin-compra";
     }
 
     private int Aleatorio() {
@@ -247,6 +246,20 @@ public class ArticuloController {
         int valorAleatorio = random.nextInt(3) + 1;
         return valorAleatorio;
     }
+
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("pdf")
+//    public String generarPdf(@RequestParam Integer pedidoId,
+//                             Model model, SessionStatus status, HttpSession sesion){
+//
+//        Pedido pedido = pedidoService.buscarPedidoId(pedidoId);
+//        //detalle de compra
+//        List<DetalleCompra> detalleLista =  detalleCompraService.findDetalleCompraByDetalleCompraId_Pedido(pedido);
+//        model.addAttribute("detalle",detalleLista);
+//        model.addAttribute("usuario",(Usuario) authenticationService.getPrincipal());
+//
+//        return "/pdf";
+//    }
 
 
 }

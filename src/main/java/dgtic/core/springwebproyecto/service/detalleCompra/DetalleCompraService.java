@@ -1,10 +1,11 @@
-package dgtic.core.springwebproyecto.service.deatlleCompra;
+package dgtic.core.springwebproyecto.service.detalleCompra;
 
 import dgtic.core.springwebproyecto.model.DetalleCompra;
 import dgtic.core.springwebproyecto.model.DetalleCompraId;
+import dgtic.core.springwebproyecto.model.Pedido;
 
+import javax.lang.model.element.PackageElement;
 import java.util.List;
-import java.util.Optional;
 
 public interface DetalleCompraService {
 
@@ -13,5 +14,7 @@ public interface DetalleCompraService {
     DetalleCompra findById(DetalleCompraId id);
 
     void save(DetalleCompra dc);
+
+    List<DetalleCompra> findDetalleCompraByDetalleCompraId_Pedido(Pedido pedido);
 
 }

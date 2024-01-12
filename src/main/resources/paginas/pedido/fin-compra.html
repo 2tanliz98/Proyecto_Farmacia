@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head>
+    <meta http-equiv="refresh" content="2;URL=http://localhost:8082/">
+    <title>Title</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap-datepicker3.standalone.min.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/jquery-ui.min.css}" rel="stylesheet">
+    <link th:href="@{/tema/miestilo.css}" rel="stylesheet">
+</head>
+<body>
+<header th:replace="plantillas/plantilla :: header"></header>
+    <div class="container text-center">
+       <div>
+           <h1>Pago exitoso</h1>
+           <h2>¡Gracias por comprar en <h2 style="font-style: italic">Farmacia!</h2></h2>
+           <br>
+           <div class="container text-center">
+               <img th:src="@{/imagen/success.png}" width="30%" height="30%"><br/>
+           </div>
+       </div>
+    </div>
+<footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

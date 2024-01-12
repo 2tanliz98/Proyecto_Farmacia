@@ -1,12 +1,12 @@
-package dgtic.core.springwebproyecto.service.deatlleCompra;
+package dgtic.core.springwebproyecto.service.detalleCompra;
 
 import dgtic.core.springwebproyecto.model.DetalleCompra;
 import dgtic.core.springwebproyecto.model.DetalleCompraId;
+import dgtic.core.springwebproyecto.model.Pedido;
 import dgtic.core.springwebproyecto.repositories.DetalleCompraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,5 +30,10 @@ public class DetalleCompraServiceImpl implements DetalleCompraService{
     @Override
     public void save(DetalleCompra dc) {
         detalleCompraRepository.save(dc);
+    }
+
+    @Override
+    public List<DetalleCompra> findDetalleCompraByDetalleCompraId_Pedido(Pedido pedido) {
+        return detalleCompraRepository.findDetalleCompraByDetalleCompraId_Pedido(pedido);
     }
 }

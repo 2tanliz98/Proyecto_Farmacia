@@ -42,9 +42,9 @@ public class Usuario implements UserDetails {
 
     private Integer rol = 1;
 
-//    @OneToOne(mappedBy = "usuario", fetch = FetchType.EAGER)
-//    @JoinColumn(name = "direccion")
-//    private Direccion direccion;
+    @OneToOne(mappedBy = "usuario", fetch = FetchType.EAGER)
+    @JoinColumn(name = "direccion")
+    private Direccion direccion;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Tarjeta> tarjeta;

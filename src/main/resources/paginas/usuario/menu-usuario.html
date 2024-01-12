@@ -97,6 +97,7 @@
                         <th scope="col">Método de pago</th>
                         <th scope="col">TOTAL</th>
                         <th scope="col">Status</th>
+<!--                        <th scope="col">PDF</th>-->
                     </tr>
                     </thead>
                     <tbody>
@@ -117,6 +118,13 @@
                                 <p>Sin estado</p>
                             </th:block>
                         </td>
+<!--                        <td>-->
+<!--                            <a class="btn btn-primary btn-xs float-right"-->
+<!--                               th:href="@{'/articulo/pdf' (pedidoId=${p.pedidoId}, format='pdf')}"-->
+<!--                               target="_blank">Descargar</a>-->
+<!--                            <input type="hidden" name="pedidoId" th:value="${p.pedidoId}">-->
+<!--                        </td>-->
+
                     </tr>
                     </tbody>
                 </table>

@@ -29,6 +29,7 @@ public class TarjetaController {
     @Autowired
     TarjetaValidacion tarjetaValidacion;
 
+
     @GetMapping("alta-tarjeta")
     public String paginaRegistro(Model model,
                                  Authentication authentication) {

@@ -27,12 +27,12 @@
                         </h5>
                         <h6 th:text=" 'Nombre: '+ ${usuarioEntity.nombre}"> </h6>
                         <h6 th:text="'Correo: '+  ${usuarioEntity.email}"></h6>
-                        <h6 th:text="'Dirección: '+ ${direccionEntity.calle} + ' ' +
-                                                    ${direccionEntity.numero} + ' ' +
-                                                    ${direccionEntity.colonia} + ' ' +
-                                                    ${direccionEntity.codigoPostal}+ ' ' +
-                                                    ${direccionEntity.municipio}+ ' ' +
-                                                    ${direccionEntity.estado}" ></h6>
+                        <h6 th:text="'Dirección: '+ ${usuarioEntity.direccion.calle} + ' ' +
+                                                    ${usuarioEntity.direccion.numero} + ' ' +
+                                                    ${usuarioEntity.direccion.colonia} + ' ' +
+                                                    ${usuarioEntity.direccion.codigoPostal}+ ' ' +
+                                                    ${usuarioEntity.direccion.municipio}+ ' ' +
+                                                    ${usuarioEntity.direccion.estado}" ></h6>
                         <br>
 
 

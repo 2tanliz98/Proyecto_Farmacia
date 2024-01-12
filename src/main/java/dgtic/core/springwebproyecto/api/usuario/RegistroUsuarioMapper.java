@@ -14,7 +14,7 @@ public class RegistroUsuarioMapper {
         return new Usuario(
                 null, usuarioRequestDTO.getNombre(), usuarioRequestDTO.getApellidoPaterno(),
                 usuarioRequestDTO.getApellidoMaterno(), usuarioRequestDTO.getEmail(),
-                usuarioRequestDTO.getPassword(), 1, null,
+                usuarioRequestDTO.getPassword(), 1, null, null,
                 usuarioRequestDTO.getAlias(), usuarioRequestDTO.getTelefono());
     }
 
