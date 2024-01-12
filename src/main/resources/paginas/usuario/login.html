@@ -15,17 +15,20 @@
 
                 <form th:action="@{/autenticacion}" th:object="${usuarioEntity}"
                       method="POST">
+                    <div th:if="${param.error}" id="errorMessage" class='alert alert-danger text-center' role="alert">
+                        <p>Verifique sus datos. Correo o contraseña incorrectos</p>
+                    </div>
                     <div class="form-group">
                         <div class="d-inline-block">
                             <input type="email" class="form-control" id="email" name="email"
-                                   placeholder="Correo electrónico">
+                                   placeholder="Correo electrónico" th:field="*{email}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="d-inline-block">
                             <input type="password"  class="form-control d-inline-block" id="password"
-                               name="password" placeholder="Contraseña" required>
+                               name="password" placeholder="Contraseña" th:field="*{password}" required>
                         </div>
                     </div>
 

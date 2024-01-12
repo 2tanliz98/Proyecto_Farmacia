@@ -137,8 +137,6 @@ public class ArticuloController {
         return "articulo/carrito";
     }
 
-    // inicio sesion
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("ver-carrito")
     public  String verCarrito(Model model){
         model.addAttribute("principal", authenticationService.getPrincipal());

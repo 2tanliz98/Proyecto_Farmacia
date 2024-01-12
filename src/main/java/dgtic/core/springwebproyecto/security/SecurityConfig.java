@@ -1,5 +1,6 @@
 package dgtic.core.springwebproyecto.security;
 
+import dgtic.core.springwebproyecto.model.CustomAuthenticationException;
 import dgtic.core.springwebproyecto.model.Usuario;
 import dgtic.core.springwebproyecto.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import java.util.Optional;
 public class SecurityConfig  {
 
     @Autowired
-    AuthenticationSuccessHandler authenticationSuccessHandler;
+    AuthenticationExceptionHandler authenticationExceptionHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -54,16 +55,12 @@ public class SecurityConfig  {
             .requestMatchers("/usuario/menu-usuario",
                     "/usuario/eliminar-usuario/",
                     "/usuario/modificar-usuario/",
-//                    "/articulo/add-carrito",
-                    "/articulo/ver-carrito",
-//                    "/articulo/delete-carrito/**",
-//                    "/articulo/modificar-carrito/**",
                     "/articulo/guardar-orden",
                     "/articulo/detalle-orden",
                     "usuario/inicio",
-//                    "/direccion/**",
                     "/tarjeta/**").hasRole("CLIENTE")
             .requestMatchers("/", "/**",
+                    "/articulo/ver-carrito",
                     "/articulo/add-carrito",
                     "/articulo/articulo-home/**",
                     "/articulo/modificar-carrito/**",
@@ -78,10 +75,10 @@ public class SecurityConfig  {
                         .loginPage("/usuario/login").permitAll()
                         .loginProcessingUrl("/autenticacion")
                         .usernameParameter("email")
-                        .passwordParameter("password"));
+                        .passwordParameter("password")
+                        .failureHandler(authenticationExceptionHandler)
+            );
         return http.build();
     }
-
-
 
 }
