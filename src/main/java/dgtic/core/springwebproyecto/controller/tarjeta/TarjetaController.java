@@ -60,7 +60,8 @@ public class TarjetaController {
             model.addAttribute("tarjetaEntity", tarjetaEntity);
             return "redirect:/usuario/menu-usuario";
         }catch(Exception ex){
-            ObjectError er=new ObjectError("Duplicados","Número de tarjeta ya existe");
+            ObjectError er =
+                    new ObjectError("Duplicados","Número de tarjeta ya existe en esta o en otra cuenta");
             model.addAttribute("warning","Número de tarjeta repetido");
             result.addError(er);
         }

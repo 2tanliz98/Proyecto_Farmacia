@@ -23,16 +23,16 @@ INSERT INTO direccion (gen_val, calle, numero, codigo_postal, colonia, municipio
 INSERT INTO direccion (gen_val, calle, numero, codigo_postal, colonia, municipio, entidad_federativa, usuario) VALUES(10, "Alhelí", "12", "01234", "Palmas", "Magdalena Contreras", "CDMX",10);
 
 -- Datos para la tabla tarjeta
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(1, 1, "1234567890", "2024-05-01", "VISA");
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(2, 2, "9876543210", "2023-12-01", "MASTERCARD");
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(3, 3, "5678901234", "2025-09-01", "AMERICAN EXPRESS");
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(4, 4, "4567890123", "2024-06-01", "VISA");
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(5, 5, "3456789012", "2023-11-01", "MASTERCARD");
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(6, 6, "6789012345", "2025-03-01", "AMERICAN EXPRESS");
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(7, 7, "2345678901", "2024-08-01", "VISA");
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(8, 8, "7890123456", "2023-10-01", "MASTERCARD");
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(9, 9, "9012345678", "2025-01-01", "AMERICAN EXPRESS");
-INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(10,10, "3456789010", "2024-07-01", "VISA");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(1, 1, "1234567890123456", "2024-05-01", "VISA");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(2, 2, "9876543210123456", "2023-12-01", "MASTERCARD");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(3, 3, "5678901234123456", "2025-09-01", "AMERICAN EXPRESS");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(4, 4, "4567890123123456", "2024-06-01", "VISA");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(5, 5, "3456789012123456", "2023-11-01", "MASTERCARD");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(6, 6, "6789012345123456", "2025-03-01", "AMERICAN EXPRESS");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(7, 7, "2345678901123456", "2024-08-01", "VISA");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(8, 8, "7890123456123456", "2023-10-01", "MASTERCARD");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(9, 9, "9012345678123456", "2025-01-01", "AMERICAN EXPRESS");
+INSERT INTO tarjeta(id_tarjeta, usuario, numero_tarjeta, fecha_expiracion, tipo_tarjeta) VALUES(10,10, "3456789010123456", "2024-07-01", "VISA");
 
 -- Datos para la tabla empresa
 INSERT INTO empresa (id_empresa, nombre, direccion) VALUES

@@ -28,7 +28,7 @@ public class Tarjeta {
 
     @Column(name="numero_tarjeta")
     @NotBlank(message = "El número de tarjeta no debe estar vacío")
-    @Pattern(regexp = "[0-9]{10}",message = "Tarjeta no valida")
+    @Pattern(regexp = "[0-9]{16}",message = "Tarjeta no valida se requieren 16 dígitos")
     private String numeroTarjeta;
 
     @Column(name="tipo_tarjeta")
