@@ -1,4 +1,4 @@
-package dgtic.core.springwebproyecto.api.usuario;
+package dgtic.core.springwebproyecto.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

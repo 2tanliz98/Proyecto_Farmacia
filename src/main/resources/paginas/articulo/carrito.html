@@ -11,7 +11,12 @@
         <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
         <li class="breadcrumb-item active">Carrito</li>
     </ol>
-    <!-- Blog Post -->
+
+    <div th:if="${warning != null}" class='alert alert-warning' role="alert">
+        No ha registrado una dirección de envío.
+        Registre su dirección en su cuenta.
+    </div>
+    <!-- Carrito Post -->
     <div class="card mb-4">
         <div class="card-body">
             <div class="row">

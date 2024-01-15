@@ -1,6 +1,6 @@
 package dgtic.core.springwebproyecto.controller.articulo;
 
-import dgtic.core.springwebproyecto.api.usuario.ErrorResponse;
+import dgtic.core.springwebproyecto.util.ErrorResponse;
 import dgtic.core.springwebproyecto.model.EstatusPedidoNotFoundException;
 import dgtic.core.springwebproyecto.model.PedidoNotFoundException;
 import org.springframework.http.HttpStatus;

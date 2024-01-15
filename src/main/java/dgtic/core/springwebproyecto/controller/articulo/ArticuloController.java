@@ -20,8 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -143,6 +145,7 @@ public class ArticuloController {
         model.addAttribute("principal", authenticationService.getPrincipal());
         model.addAttribute("carrito", detalleSesion);
         model.addAttribute("pedido", pedido);
+
         return "articulo/carrito";
     }
 
@@ -183,28 +186,18 @@ public class ArticuloController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("detalle-orden")
-    public String comprar(Model model,
-                          HttpServletRequest request,
-                          HttpServletResponse response) throws IOException {
+    public String comprar(Model model, HttpSession session){
         Usuario usuario = (Usuario) authenticationService.getPrincipal();
-        Integer usuarioId = usuario.getId();
-
-        Usuario us = usuarioService.buscarUsuarioId(usuarioId);
-        Direccion direccion = direccion = direccionService.buscarDireccionUsuario(usuario);
-
+        Integer id = usuario.getId();
+        Usuario us = usuarioService.buscarUsuarioId(id);
         try{
-
+            Direccion direccion = direccionService.buscarDireccionUsuario(usuario);
         }catch (Exception e){
-
+            session.setAttribute("urlDeReferencia", "/articulo/detalle-orden");
+            return "redirect:/direccion/alta-direccion/"+usuario.getId();
         }
-
-        if(direccion == null){
-            return "/direccion/registro-direccion";
-        }
-
         model.addAttribute("principal", authenticationService.getPrincipal());
-        model.addAttribute("usuarioEntity", usuario);
-        model.addAttribute("direccionEntity", direccion);
+        model.addAttribute("usuarioEntity", us);
         model.addAttribute("carrito", detalleSesion);
         model.addAttribute("pedido", pedido);
         model.addAttribute("metodoPago", metodoPagoService.findAll());

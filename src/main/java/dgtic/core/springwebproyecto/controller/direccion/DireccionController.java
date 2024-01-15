@@ -7,6 +7,7 @@ import dgtic.core.springwebproyecto.model.Usuario;
 import dgtic.core.springwebproyecto.service.direccion.DireccionService;
 import dgtic.core.springwebproyecto.service.usuario.UsuarioService;
 import dgtic.core.springwebproyecto.validation.DireccionValidacion;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.TypeMismatchException;
@@ -42,11 +43,7 @@ public class DireccionController {
 
     @GetMapping("alta-direccion/{usuarioId}")
     public String paginaRegistro(Model model,
-                                 @PathVariable("usuarioId") Integer usuarioId,
-                                 RedirectAttributes flash,
-                                 Authentication authentication) {
-//        Usuario usuario = (Usuario) authentication.getPrincipal();
-//        Integer usuarioId = usuario.getId();
+                                 @PathVariable("usuarioId") Integer usuarioId) {
         Direccion direccionEntity=new Direccion();
         Usuario usuarioEntity = usuarioService.buscarUsuarioId(usuarioId);
         direccionEntity.setUsuario(usuarioEntity);
@@ -59,7 +56,8 @@ public class DireccionController {
 
     @PostMapping("registro-direccion")
     public String entradaRegistro(@Valid @ModelAttribute("direccionEntity") Direccion direccionEntity,
-                                  BindingResult result, Model model, RedirectAttributes flash){
+                                  BindingResult result, Model model, RedirectAttributes flash,
+                                  HttpSession session){
         //direccionValidacion.validate(direccionEntity,result);
         if (result.hasErrors()) {
             for (FieldError e :result.getFieldErrors()) {
@@ -73,7 +71,12 @@ public class DireccionController {
             flash.addFlashAttribute("success","Se almaceno con éxito ");
             flash.addFlashAttribute("usuarioId",direccionEntity.getUsuario().getId());
             model.addAttribute("usuarioId",direccionEntity.getUsuario().getId());
-            return "redirect:/usuario/registro-exitoso";
+
+            String urlDeReferencia = session.getAttribute("urlDeReferencia").toString();
+            if (urlDeReferencia != null) {
+                return "redirect:/articulo/ver-carrito";
+            } else return "redirect:/usuario/registro-exitoso";
+
         }catch (Exception ex){
             ObjectError er = new ObjectError("Error",
                     "Ha ocurrido un error al registrar dirección");
