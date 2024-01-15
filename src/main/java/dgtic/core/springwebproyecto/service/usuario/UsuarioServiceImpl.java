@@ -59,7 +59,6 @@ public class UsuarioServiceImpl implements UsuarioService{
         return op.get();
     }
 
-
     @Override
     public List<Usuario> buscarUsuarios() {
         return null;

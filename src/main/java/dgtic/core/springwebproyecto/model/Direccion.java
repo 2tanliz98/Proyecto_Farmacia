@@ -49,6 +49,17 @@ public class Direccion {
     @JoinColumn(name = "usuario")
     private Usuario usuario;
 
+    public Direccion(Integer id, String calle, String numero, String codigoPostal,
+                     String colonia, String municipio, String estado) {
+        this.id = id;
+        this.calle = calle;
+        this.numero = numero;
+        this.codigoPostal = codigoPostal;
+        this.colonia = colonia;
+        this.municipio = municipio;
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
         return "Direccion{" +

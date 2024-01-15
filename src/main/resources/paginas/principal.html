@@ -5,31 +5,35 @@
 <body>
     <header th:replace="plantillas/plantilla :: header"></header>
     <main class="row text-center">
-        <h1 th:text="${contenido}"></h1>
-        <br/>
+
+        <h1 th:text="${contenido}" style="padding-bottom: 25px; padding-top: 10px"></h1>
+
 <!--        <img th:src="@{/imagen/inicio-1.png}" />-->
 
-        <!-- Page Features -->
+        <!-- Artículos -->
         <div class="row text-center">
             <br/>
-            <div class="col-lg-3 col-md-6 mb-4" th:each="articulo: ${articulos}">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4" th:each="articulo: ${articulos}">
                 <div class="card h-100">
-                    <a class="card-body" th:href="@{/articulo/articulo-home/{articuloId}(articuloId=${articulo.articuloId})}">
-                        <img class=" img-fluid"
-                         th:src="@{'/imagenes/'+${articulo.imagen}}" width="80%" height="80%" alt="">
+                    <a class="card-body"
+                       th:href="@{/articulo/articulo-home/{articuloId}(articuloId=${articulo.articuloId})}">
+                        <img class="img-fluid" th:src="@{'/imagenes/'+${articulo.imagen}}" width="80%" height="80%" alt="">
                     </a>
                     <div class="card-body">
-                        <p class="card-text" th:text="${articulo.nombre}"></p>
+                        <h5 class="card-text" th:text="${articulo.nombre}"></h5>
+                        <h4 class="card-text" th:text="'$ '+${articulo.precio}"></h4>
                     </div>
                     <div class="card-footer">
-                        <a th:href="@{/articulo/articulo-home/{articuloId}(articuloId=${articulo.articuloId})}"
-                           class="btn btn-success">
-                            Ver artículo
-                        </a>
+                        <form th:action="@{/articulo/add-carrito}" th:object="${articulo}" method="post">
+                            <button type="submit" class="btn btn-info btn-block btn-lg">Añadir al carrito</button>
+                            <input type="hidden" id="cantidad" name="cantidad" value="1">
+                            <input type="hidden" name="articuloId" th:value="${articulo.articuloId}"/>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
         <nav th:replace="plantillas/pag-nav :: paginador"></nav>
     </main>
     <footer th:replace="plantillas/plantilla :: footer"></footer>

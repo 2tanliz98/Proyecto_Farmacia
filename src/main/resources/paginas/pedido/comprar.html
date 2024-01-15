@@ -108,6 +108,7 @@
 
             if (metodoPagoId === '4') {
                 $('#tarjetaTable').hide();
+                verificarEstadoBoton();
             } else {
                 $('#tarjetaTable').show();
                 $('input[name="tarjetaSeleccionada"]').change(function () {

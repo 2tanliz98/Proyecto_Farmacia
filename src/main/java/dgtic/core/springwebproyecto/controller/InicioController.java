@@ -52,7 +52,7 @@ public class InicioController {
         model.addAttribute("contenido", "Bienvenido");
         model.addAttribute("archivo", archivoRuta);
         model.addAttribute("principal", authenticationService.getPrincipal());
-        Pageable pagReq = PageRequest.of(page, 9);
+        Pageable pagReq = PageRequest.of(page, 12);
         Page<Articulo> articulos = articuloService.findAll(pagReq);
         RenderPagina<Articulo> render = new RenderPagina<>("/",articulos);
         model.addAttribute("articulos", articulos);
@@ -70,9 +70,12 @@ public class InicioController {
         model.addAttribute("contenido", "Bienvenido");
         model.addAttribute("archivo", archivoRuta);
         model.addAttribute("principal", authenticationService.getPrincipal());
-        Pageable pagReq = PageRequest.of(page, 9);
+        Pageable pagReq = PageRequest.of(page, 12);
         query = "%"+query+"%";
         Page<Articulo> articulos = articuloService.findByNombreLikeIgnoreCase(query,pagReq);
+        if(articulos.isEmpty()){
+            return "/articulo/no-encontrado";
+        }
         model.addAttribute("articulos", articulos);
         RenderPagina<Articulo> render = new RenderPagina<>("/",articulos);
         model.addAttribute("page", render);
@@ -89,7 +92,7 @@ public class InicioController {
         model.addAttribute("contenido", "Bienvenido");
         model.addAttribute("archivo", archivoRuta);
         model.addAttribute("principal", authenticationService.getPrincipal());
-        Pageable pagReq = PageRequest.of(page, 9);
+        Pageable pagReq = PageRequest.of(page, 12);
         Page<Cosmetico> articulos = cosmeticoService.findAllPagination(pagReq);
         model.addAttribute("articulos", articulos);
         RenderPagina<Cosmetico> render = new RenderPagina<>("/",articulos);
@@ -107,7 +110,7 @@ public class InicioController {
         model.addAttribute("contenido", "Bienvenido");
         model.addAttribute("archivo", archivoRuta);
         model.addAttribute("principal", authenticationService.getPrincipal());
-        Pageable pagReq = PageRequest.of(page, 9);
+        Pageable pagReq = PageRequest.of(page, 12);
         Page<Medicamento> articulos = medicamentoService.findAllPagination(pagReq);
         model.addAttribute("articulos", articulos);
         RenderPagina<Medicamento> render = new RenderPagina<>("/",articulos);

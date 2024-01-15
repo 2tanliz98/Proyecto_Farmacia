@@ -1,6 +1,13 @@
 -- Autora Tania Lizeth Peñaloza Lugo 07/09/2023
+DROP USER IF EXISTS 'tania'@'localhost';
+CREATE USER 'tania'@'localhost' IDENTIFIED BY 'tania';
+
+
 DROP DATABASE if EXISTS farmacia;
 CREATE DATABASE farmacia;
+
+GRANT ALL PRIVILEGES ON farmacia.* TO 'tania'@'localhost';
+
 USE farmacia;
 
 
@@ -14,7 +21,7 @@ CREATE TABLE articulo (
 	id_articulo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	marca VARCHAR(50) NOT NULL,
 	nombre VARCHAR(50) NOT NULL,
-	descripcion VARCHAR(100) NULL,
+	descripcion VARCHAR(300) NULL,
 	precio NUMERIC(8,2) NOT NULL,
 	articulo_tipo INT NOT NULL,
 	unidades INT NOT NULL DEFAULT 0,

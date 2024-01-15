@@ -1,6 +1,9 @@
 package dgtic.core.springwebproyecto.api.usuario;
 
+import dgtic.core.springwebproyecto.model.Direccion;
 import dgtic.core.springwebproyecto.model.Usuario;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +19,13 @@ public class RegistroUsuarioMapper {
                 usuarioRequestDTO.getApellidoMaterno(), usuarioRequestDTO.getEmail(),
                 usuarioRequestDTO.getPassword(), 1, null, null,
                 usuarioRequestDTO.getAlias(), usuarioRequestDTO.getTelefono());
+    }
+    public Direccion toDireccion(DireccionDTO direccionDTO) {
+        return new Direccion(
+                null, direccionDTO.getCalle(), direccionDTO.getNumero(),
+                direccionDTO.getCodigoPostal(), direccionDTO.getColonia(),
+                direccionDTO.getMunicipio(), direccionDTO.getEstado()
+                );
     }
 
 

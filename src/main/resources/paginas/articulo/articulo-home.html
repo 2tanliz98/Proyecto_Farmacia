@@ -30,7 +30,7 @@
                             <h2 class="card-title" th:text="${articulo.nombre}"></h2>
 
                             <ul class="list-group">
-                                <li class="list-group-item"><h5 th:text=" 'Precio: '+ ${articulo.precio} "></h5></li>
+                                <li class="list-group-item"><h5 th:text=" 'Precio: $'+ ${articulo.precio} "></h5></li>
                                 <li class="list-group-item">
                                     <p th:text=" 'Descripción: '+ ${articulo.descripcion}"></p>
                                 </li>
@@ -39,7 +39,7 @@
                                 </li>
                                 <li class="list-group-item">
                                     <h6> Cantidad: <input type="number" id="cantidad" name="cantidad"
-                                                          autocomplete="off" min="1" max="5" value="1">
+                                                          autocomplete="off" min="1" max="10" value="1">
                                     </h6>
                                 </li>
                             </ul>

@@ -42,47 +42,54 @@
 <body>
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="row container">
-            <div class="col-md-3">
-                <a class="navbar-brand" style="color:white" th:href="@{/}"><h1>Farmacia</h1></a>
-            </div>
-            <div class="col-md-6">
-                <form th:action="@{/buscar}" method="post"
-                      class="form d-flex align-items-center">
-                    <input class="form-control" type="text" name="query" placeholder="Buscar...">
-                    <button class="btn btn-outline-success " type="submit">Buscar</button>
+        <div class="container">
+            <a class="navbar-brand" style="color:white" th:href="@{/}"><h1><strong>VitalFarmacia</strong></h1></a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <form th:action="@{/buscar}" method="post" class="form d-flex align-items-center mx-auto my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" name="query" placeholder="Buscar...">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
                 </form>
-            </div>
 
-            <div class="col-md-2 d-flex">
-                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Categorías
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" th:href="@{/buscar-cosmeticos}">Cosméticos</a></li>
-                    <li><a class="dropdown-item" th:href="@{/buscar-medicamentos}">Medicamentos</a></li>
-                    <li><a class="dropdown-item" th:href="@{/}">Todos</a></li>
-                </ul>
-            </div>
+                <div class="col-md-2 d-flex">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="categoriasDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categorías
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="categoriasDropdown">
+                            <li><a class="dropdown-item" th:href="@{/buscar-cosmeticos}">Cosméticos</a></li>
+                            <li><a class="dropdown-item" th:href="@{/buscar-medicamentos}">Medicamentos</a></li>
+                            <li><a class="dropdown-item" th:href="@{/}">Todos</a></li>
+                        </ul>
+                    </div>
+                </div>
 
 
-            <div class="col-md-2 d-flex justify-content-end">
-                <div class="navbar">
+                <div class="navbar ml-lg-2">
                     <a class="btn btn-outline-primary" th:href="@{/articulo/ver-carrito}">
-                        <i class="fa-solid fa-cart-shopping"></i></a>
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
                 </div>
 
-                <div class="col-md-1 navbar" th:if="${principal == null}">
+                <div class="navbar ml-lg-2" th:if="${principal == null}">
                     <a class="btn btn-outline-primary" th:href="@{/usuario/login}">
-                        <i class="fa-solid fa-user"></i></a>
+                        <i class="fa-solid fa-user"></i>
+                    </a>
                 </div>
-                <div class="col-md-1 navbar" th:if="${principal != null}">
+
+                <div class="navbar ml-lg-2" th:if="${principal != null}">
                     <a class="btn btn-outline-primary" th:href="@{/usuario/menu-usuario}">
-                        <i class="fa-solid fa-user"></i></a>
+                        <i class="fa-solid fa-user"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
+
 </header>
 <!-- Container -->
 <!--///////////-->
@@ -91,7 +98,7 @@
 <footer th:fragment="footer" style="bottom: 0; width: 100%;">
     <div class=" footer container-fluid text-center bg-dark text-white py-3 w-auto"
     style="bottom: 0; width: 100%">
-        <p style="font-family: 'Baskerville Old Face';">Autora: Tania Lizeth Peñaloza Lugo</p>
+        <p style="font-family: 'Baskerville Old Face';">Créditos: Tania Lizeth Peñaloza Lugo</p>
     </div>
 
     <script th:src="@{/bootstrap/js/jquery-3.6.3.js}"></script>

@@ -72,11 +72,12 @@ public class UsuarioController {
         try {
             usuarioService.altaUsuario(usuarioEntity);
             Integer usuarioId = usuarioEntity.getId();
+            Usuario usuario = usuarioService.buscarUsuarioId(usuarioId);
             flash.addFlashAttribute("success", "Se almaceno con éxito");
             flash.addFlashAttribute("usuarioId", usuarioId);
-            return "redirect:/direccion/alta-direccion/"+usuarioId;
+            return "redirect:/direccion/alta-direccion/" + usuarioId;
         } catch(Exception ex){
-            ObjectError er=new ObjectError("Duplicados","El correo ya existe");
+            ObjectError er=new ObjectError("Duplicados","Ya existe una cuenta con el mismo correo");
             model.addAttribute("warning","Correo repetido");
             result.addError(er);
         }
@@ -97,7 +98,6 @@ public class UsuarioController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("menu-usuario")
     public String paginaMenu(Model model,
-                             RedirectAttributes flash,
                              Authentication authentication,
                              @RequestParam(name = "page", defaultValue = "0") int page) {
         model.addAttribute("principal", authenticationService.getPrincipal());
@@ -150,14 +150,34 @@ public class UsuarioController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("modificar-usuario")
-    public String modificarUsuario(Model model,
+    public String modificarUsuarioGet(Model model,
                                    Authentication authentication) {
         Usuario usuario = (Usuario) authentication.getPrincipal();
-        Integer usuarioId = usuario.getId();
-
-        Usuario us = usuarioService.buscarUsuarioId(usuarioId);
-        model.addAttribute("usuarioEntity", us);
-        return "usuario/alta-usuario";
+        model.addAttribute("usuarioEntity", usuario);
+        return "usuario/modificar-usuario";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("modificar-usuario")
+    public String modificarUsuarioPost(@Valid @ModelAttribute("usuarioEntity") Usuario usuarioEntity,
+                                       BindingResult result, Model model, RedirectAttributes flash) {
+        usuarioValidacion.validate(usuarioEntity, result);
+        if (result.hasErrors()) {
+            for (FieldError e :result.getFieldErrors()) {
+                System.out.println(e.getDefaultMessage());
+                System.out.println(e.getCode());
+            }
+            return "usuario/modificar-usuario";
+        }
+        try {
+            usuarioService.altaUsuario(usuarioEntity);
+            flash.addFlashAttribute("success", "Cambios gusardados con éxito");
+            return "redirect:/usuario/menu-usuario";
+        } catch(Exception ex){
+            ObjectError er=new ObjectError("Error",ex.getMessage());
+            model.addAttribute("warning","Correo repetido");
+            result.addError(er);
+        }
+        return "usuario/modificar-usuario";
     }
 
     @GetMapping("/login")

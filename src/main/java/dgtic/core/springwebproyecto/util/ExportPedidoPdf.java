@@ -1,10 +1,13 @@
-package dgtic.core.springwebproyecto.model;
+package dgtic.core.springwebproyecto.util;
 
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+
+import dgtic.core.springwebproyecto.model.DetalleCompra;
+import dgtic.core.springwebproyecto.model.Pedido;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.awt.*;
@@ -31,7 +34,7 @@ public class ExportPedidoPdf {
         Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
         font.setColor(Color.WHITE);
 
-        celda.setPhrase(new Phrase("Producto",font));
+        celda.setPhrase(new Phrase("Nombre artículo",font));
         table.addCell(celda);
         celda.setPhrase(new Phrase("Precio",font));
         table.addCell(celda);
@@ -58,9 +61,9 @@ public class ExportPedidoPdf {
         Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
         font.setSize(18);
 
-        Paragraph titulo = new Paragraph("FARMACIA",font);
+        Paragraph titulo = new Paragraph("VITALFARMACIA",font);
         doc.add(titulo);
-        doc.add(new Paragraph("Detalle de la orden",font));
+        doc.add(new Paragraph("Detalle de la orden #"+pedido.getPedidoId(),font));
 
         doc.add(new Paragraph("DATOS DEL USUARIO"));
         doc.add(new Paragraph("Nombre: "+pedido.getUsuario().getNombre()+" "+

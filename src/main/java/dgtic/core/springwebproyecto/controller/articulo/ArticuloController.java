@@ -12,6 +12,7 @@ import dgtic.core.springwebproyecto.service.articulo.ArticuloService;
 import dgtic.core.springwebproyecto.service.metodoPago.MetodoPagoService;
 import dgtic.core.springwebproyecto.service.pedido.PedidoService;
 import dgtic.core.springwebproyecto.service.usuario.UsuarioService;
+import dgtic.core.springwebproyecto.util.ExportPedidoPdf;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -189,10 +190,15 @@ public class ArticuloController {
         Integer usuarioId = usuario.getId();
 
         Usuario us = usuarioService.buscarUsuarioId(usuarioId);
-        Direccion direccion = null;
+        Direccion direccion = direccion = direccionService.buscarDireccionUsuario(usuario);
+
         try{
-            direccion = direccionService.buscarDireccionUsuario(usuario);
-        }catch (DireccionNotFoundException de){
+
+        }catch (Exception e){
+
+        }
+
+        if(direccion == null){
             return "/direccion/registro-direccion";
         }
 
@@ -248,26 +254,24 @@ public class ArticuloController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("pdf")
     public void generarPdf(@RequestParam Integer pedidoId,
-                             Model model, HttpServletResponse response) throws IOException {
+                           Model model, HttpServletResponse response) throws IOException {
 
-        response.setContentType("aplicacion/pdf");
+        response.setContentType("application/pdf");
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment,filename=detalle_orden.pdf";
+        String headerValue = "attachment; filename=detalle_orden.pdf";
 
-        response.setHeader(headerKey,headerValue);
-
+        response.setHeader(headerKey, headerValue);
 
         Pedido pedido = pedidoService.buscarPedidoId(pedidoId);
         //detalle de compra
-        List<DetalleCompra> detalleLista =  detalleCompraService.findDetalleCompraByDetalleCompraId_Pedido(pedido);
-        model.addAttribute("detalle",detalleLista);
-        model.addAttribute("usuario",(Usuario) authenticationService.getPrincipal());
+        List<DetalleCompra> detalleLista = detalleCompraService.findDetalleCompraByDetalleCompraId_Pedido(pedido);
+        model.addAttribute("detalle", detalleLista);
+        model.addAttribute("usuario", (Usuario) authenticationService.getPrincipal());
 
-        ExportPedidoPdf exportPedidoPdf = new ExportPedidoPdf(detalleLista,pedido);
+        ExportPedidoPdf exportPedidoPdf = new ExportPedidoPdf(detalleLista, pedido);
         exportPedidoPdf.export(response);
-
-        //return "/pdf";
     }
+
 
 
 }

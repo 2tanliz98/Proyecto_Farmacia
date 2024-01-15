@@ -6,7 +6,7 @@
 <header th:replace="plantillas/plantilla :: header"></header>
 <main class="container">
     <div class="card">
-        <h4 class="card-header"><strong>Registro</strong></h4>
+        <h4 class="card-header"><strong>Domicilio</strong></h4>
         <div class="card-body">
             <form th:action="@{/direccion/modificar-direccion/{id} (id=${direccionEntity.id})}" th:object="${direccionEntity}"
                   method="post">

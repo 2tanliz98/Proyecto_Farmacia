@@ -13,4 +13,8 @@ public class RegistroUsuarioDTO {
     @Valid
     private UsuarioRequestDTO usuario;
 
+    @NotNull(message="Direccion es requerida para realizar el registro")
+    @Valid
+    private DireccionDTO direccion;
+
 }
