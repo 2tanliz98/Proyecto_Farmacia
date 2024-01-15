@@ -9,6 +9,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import dgtic.core.springwebproyecto.model.DetalleCompra;
 import dgtic.core.springwebproyecto.model.Pedido;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.io.IOException;
