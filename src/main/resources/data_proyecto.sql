@@ -120,17 +120,17 @@ INSERT INTO pedido (id_pedido, metodo_pago, fecha, usuario, total) VALUES
 (10, 1, '2023-10-05', 10, 120);
 
 -- Datos para la tabla detalle_compra
-INSERT INTO detalle_compra (pedido, articulo, cantidad) VALUES
-(1, 1, 2),
-(2, 2, 1),
-(3, 3, 1),
-(4, 4, 1),
-(5, 5, 1),
-(6, 6, 1),
-(7, 7, 1),
-(8, 8, 1),
-(9, 9, 1),
-(10, 10, 1);
+INSERT INTO detalle_compra (pedido, articulo, cantidad,suma_total) VALUES
+(1, 1, 2, 100),
+(2, 2, 1, 75.50),
+(3, 3, 1, 35.25),
+(4, 4, 1, 120),
+(5, 5, 1, 120),
+(6, 6, 1, 100),
+(7, 7, 1, 50),
+(8, 8, 1, 75),
+(9, 9, 1, 30.25),
+(10, 10, 1, 120);
 
 -- Datos para la tabla estatus (de pedido)
 -- DELETE FROM estatus;

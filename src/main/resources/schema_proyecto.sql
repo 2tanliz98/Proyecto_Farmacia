@@ -116,7 +116,7 @@ CREATE TABLE pedido(
 CREATE TABLE detalle_compra(
 	pedido INT NOT NULL,
 	articulo INT NOT NULL,
-	suma_total DECIMAL(8,2) DEFAULT 0 CHECK (suma_total >= 0),
+	suma_total DECIMAL(8,2) NOT NULL DEFAULT 0 CHECK (suma_total >= 0),
 	cantidad INT NOT NULL DEFAULT 0 CHECK (cantidad >= 0),
 	CONSTRAINT cantidad_pp_ck CHECK (cantidad >= 0),
 	CONSTRAINT pedido_pp_fk FOREIGN KEY (pedido) REFERENCES farmacia.pedido(id_pedido),
