@@ -133,11 +133,9 @@
             var tarjeta = $('input[name="tarjetaSeleccionada"]:checked').val();
 
             if (metodoPago === '4' || (metodoPago !== '4' && tarjeta !== undefined)) {
-                // Puedes enviar el formulario aquí
                 var formulario = $('#formulario');
                 formulario.submit();
             } else {
-                // Evitar el envío del formulario si los campos no están completos
                 event.preventDefault();
                 alert('Por favor, seleccione un método de pago y una tarjeta.');
             }
