@@ -190,6 +190,7 @@ public class ArticuloController {
         Usuario usuario = (Usuario) authenticationService.getPrincipal();
         Integer id = usuario.getId();
         Usuario us = usuarioService.buscarUsuarioId(id);
+        // vifica que exista una dirección asociada para la entrega
         try{
             Direccion direccion = direccionService.buscarDireccionUsuario(usuario);
         }catch (Exception e){
