@@ -99,7 +99,7 @@ CREATE TABLE tarjeta(
 	tipo_tarjeta VARCHAR(50) NOT NULL,
 	CONSTRAINT usuario_fk FOREIGN KEY (usuario) REFERENCES farmacia.usuario(id_usuario),
 	CONSTRAINT numero_tarjeta_usuario_uq UNIQUE (numero_tarjeta),
-	CONSTRAINT numero_tarjeta_ck CHECK (CHAR_LENGTH(CAST(numero_tarjeta AS CHAR)) = 10 )
+	CONSTRAINT numero_tarjeta_ck CHECK (CHAR_LENGTH(CAST(numero_tarjeta AS CHAR)) = 16 )
 );
 
 
